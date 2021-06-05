@@ -115,6 +115,7 @@ namespace HttpMessager
         public void ShowMessage(string title, string message)
         {
             libStatus.Items.Add($"Show Message: {title}, {message}");
+            Communication.ToastNotification(title, message, 0);
             FrmMessage frmMessage = new FrmMessage();
             frmMessage.Text = title;
             frmMessage.message = message;
