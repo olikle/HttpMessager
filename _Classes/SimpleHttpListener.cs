@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,12 +20,12 @@ namespace HttpMessager
         /// <summary>
         /// The port the HttpListener should listen on
         /// </summary>
-        private const int Port = 8888;
+        private int _port;
 
         /// <summary>
         /// This is the heart of the web server
         /// </summary>
-        private readonly HttpListener Listener = new HttpListener { Prefixes = { $"http://localhost:{Port}/" } };
+        private readonly HttpListener _httpListener;
 
         /// <summary>
         /// A flag to specify when we need to stop
@@ -36,19 +37,32 @@ namespace HttpMessager
         /// </summary>
         private Task _mainLoop;
 
-        private ListBox _libStatus;
-        private Form _mainForm;
         #endregion
 
         #region Constructur
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleHttpServer"/> class.
         /// </summary>
-        public SimpleHttpListener(Form mainForm, ListBox libStatus)
+        public SimpleHttpListener(int port)
         {
-            _mainForm = mainForm;
+            _port = port;
+            //_httpListener = new HttpListener { Prefixes = { $"http://localhost:{_port}/" } };
+            //_httpListener = new HttpListener { Prefixes = { $"http://*:{_port}/" } };
+            _httpListener = new HttpListener();
 
-            _libStatus = libStatus;
+            //_httpListener.Prefixes.Add($"http://localhost:{_port}/");
+            //_httpListener.Prefixes.Add($"http://127.0.0.1:{_port}/");
+            _httpListener.Prefixes.Add($"http://+:{_port}/"); // you have to add the urlacl - see readme.txt
+
+            IPAddress[] addrs = Array.FindAll(Dns.GetHostEntry(string.Empty).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
+            foreach (IPAddress addr in addrs)
+            {
+                //_httpListener.Prefixes.Add($"http://{addr}:{_port}/");
+            }
+
+            //_httpListener.Start();
+            //Automatically set the IP address
+            //string[] ips = addrs.Select(ip => ip.ToString()).ToArray();
         }
         #endregion
 
@@ -73,10 +87,10 @@ namespace HttpMessager
         {
             OnRecieveStatus(new HttpMessagerEventArgs("status", "Stop Webserver"));
             _keepGoing = false;
-            lock (Listener)
+            lock (_httpListener)
             {
                 //Use a lock so we don't kill a request that's currently being processed
-                Listener.Stop();
+                _httpListener.Stop();
             }
             //????
             //try
@@ -94,15 +108,15 @@ namespace HttpMessager
         /// <returns></returns>
         private async Task MainLoop()
         {
-            Listener.Start();
+            _httpListener.Start();
             OnRecieveStatus(new HttpMessagerEventArgs("status", "Mainloop..."));
             while (_keepGoing)
             {
                 try
                 {
                     //GetContextAsync() returns when a new request come in
-                    var context = await Listener.GetContextAsync();
-                    lock (Listener)
+                    var context = await _httpListener.GetContextAsync();
+                    lock (_httpListener)
                     {
                         if (_keepGoing) ProcessRequest(context);
                     }
@@ -430,15 +444,10 @@ namespace HttpMessager
 
     #region HttpMessagerEventHandler Declaration
     /// <summary>
-    /// 
+    /// HttpMessagerEventHandler Declaration
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="ScanItemEventArgs"/> instance containing the event data.</param>
     public delegate void HttpMessagerEventHandler(object sender, HttpMessagerEventArgs e);
     #endregion
-
-    class MySettings
-    {
-        public string Title = "Settings";
-    }
 }

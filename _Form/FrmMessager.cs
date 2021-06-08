@@ -41,7 +41,7 @@ namespace HttpMessager
             btnStartListener.Enabled = false;
             btnStopListener.Enabled = true;
 
-            _simpleHttpListener = new SimpleHttpListener(this, libStatus);
+            _simpleHttpListener = new SimpleHttpListener(8888);
             _simpleHttpListener.RecieveStatus += SimpleHttpListener_RecieveStatus;
             _simpleHttpListener.RecieveMessage += SimpleHttpListener_RecieveMessage;
             _simpleHttpListener.StartWebServer();

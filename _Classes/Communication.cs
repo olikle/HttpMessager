@@ -10,7 +10,7 @@ namespace HttpMessager
     #region Constructor
     /// <summary>
     /// https://github.com/windows-toolkit/WindowsCommunityToolkit
-    /// https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/send-local-toast?tabs=uwp
+    /// https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/send-local-toast?tabs=desktop
     /// </summary>
     class Communication
     {
