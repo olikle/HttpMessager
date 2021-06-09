@@ -182,7 +182,7 @@ namespace HttpMessager
                                     var jsonRPCRequest = JsonConvert.DeserializeObject<JsonRPCRequest>(json);
                                     if (jsonRPCRequest.Method == "SendMessage")
                                     {
-                                        var message = jsonRPCRequest.Params.message.ToString();
+                                        var message = "From: " + jsonRPCRequest.Params.from.ToString() + "\n\n" + jsonRPCRequest.Params.message.ToString();
                                         OnRecieveMessage(new HttpMessagerEventArgs("json", message));
                                         //OnRecieveMessage(new HttpMessagerEventArgs("json", JsonConvert.SerializeObject(jsonRPCRequest.Params)));
                                     }

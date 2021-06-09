@@ -128,6 +128,7 @@ namespace HttpMessager
         private void btnSend_Click(object sender, EventArgs e)
         {
             JsonRPCRequest jsonRPCRequest = new JsonRPCRequest("SendMessage");
+            jsonRPCRequest.Params.from = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString();
             jsonRPCRequest.Params.message = txtMessage.Text;
 
             var addresses = txtAdresses.Text.Split(",");
