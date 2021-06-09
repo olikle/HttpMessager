@@ -54,12 +54,11 @@ namespace HttpMessager
             //_httpListener.Prefixes.Add($"http://127.0.0.1:{_port}/");
             _httpListener.Prefixes.Add($"http://+:{_port}/"); // you have to add the urlacl - see readme.txt
 
-            IPAddress[] addrs = Array.FindAll(Dns.GetHostEntry(string.Empty).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
-            foreach (IPAddress addr in addrs)
-            {
-                //_httpListener.Prefixes.Add($"http://{addr}:{_port}/");
-            }
-
+            //IPAddress[] addrs = Array.FindAll(Dns.GetHostEntry(string.Empty).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
+            //foreach (IPAddress addr in addrs)
+            //{
+            //    _httpListener.Prefixes.Add($"http://{addr}:{_port}/");
+            //}
             //_httpListener.Start();
             //Automatically set the IP address
             //string[] ips = addrs.Select(ip => ip.ToString()).ToArray();
@@ -170,43 +169,72 @@ namespace HttpMessager
                                 break;
                             }
                             break;
-                        ////TODO: Add cases for each URL we want to respond to
-                        //case "/settings":
-                        //    switch (context.Request.HttpMethod)
-                        //    {
-                        //        case "GET":
-                        //            //Get the current settings
-                        //            response.ContentType = "application/json";
+                        case "/jsonrpc":
+                            if (context.Request.HttpMethod == "POST")
+                            {
+                                using (var body = context.Request.InputStream)
+                                using (var reader = new StreamReader(body, context.Request.ContentEncoding))
+                                {
+                                    //Get the data that was sent to us
+                                    var json = reader.ReadToEnd();
 
-                        //            //This is what we want to send back
-                        //            //var responseBody = JsonConvert.SerializeObject(MyApplicationSettings);
-                        //            var responseBody = "{ \"success\": \"true\"}";
+                                    //Use it to update our settings
+                                    var jsonRPCRequest = JsonConvert.DeserializeObject<JsonRPCRequest>(json);
+                                    if (jsonRPCRequest.Method == "SendMessage")
+                                    {
+                                        var message = jsonRPCRequest.Params.message.ToString();
+                                        OnRecieveMessage(new HttpMessagerEventArgs("json", message));
+                                        //OnRecieveMessage(new HttpMessagerEventArgs("json", JsonConvert.SerializeObject(jsonRPCRequest.Params)));
+                                    }
 
-                        //            //Write it to the response stream
-                        //            var buffer = Encoding.UTF8.GetBytes(responseBody);
-                        //            response.ContentLength64 = buffer.Length;
-                        //            response.OutputStream.Write(buffer, 0, buffer.Length);
-                        //            handled = true;
-                        //            break;
+                                    JsonRPCRespone jsonRPCRespone = new JsonRPCRespone();
+                                    jsonRPCRespone.Result = "Message send";
 
-                        //        case "PUT":
-                        //            //Update the settings
-                        //            using (var body = context.Request.InputStream)
-                        //            using (var reader = new StreamReader(body, context.Request.ContentEncoding))
-                        //            {
-                        //                //Get the data that was sent to us
-                        //                var json = reader.ReadToEnd();
+                                    CreateResponse(response, jsonRPCRespone.ToString());
 
-                        //                //Use it to update our settings
-                        //                UpdateSettings(JsonConvert.DeserializeObject<MySettings>(json));
+                                    response.StatusCode = 200;
+                                    handled = true;
+                                }
+                                break;
+                            }
+                            break;
+                            ////TODO: Add cases for each URL we want to respond to
+                            //case "/settings":
+                            //    switch (context.Request.HttpMethod)
+                            //    {
+                            //        case "GET":
+                            //            //Get the current settings
+                            //            response.ContentType = "application/json";
 
-                        //                //Return 204 No Content to say we did it successfully
-                        //                response.StatusCode = 204;
-                        //                handled = true;
-                        //            }
-                        //            break;
-                        //    }
-                        //    break;
+                            //            //This is what we want to send back
+                            //            //var responseBody = JsonConvert.SerializeObject(MyApplicationSettings);
+                            //            var responseBody = "{ \"success\": \"true\"}";
+
+                            //            //Write it to the response stream
+                            //            var buffer = Encoding.UTF8.GetBytes(responseBody);
+                            //            response.ContentLength64 = buffer.Length;
+                            //            response.OutputStream.Write(buffer, 0, buffer.Length);
+                            //            handled = true;
+                            //            break;
+
+                            //        case "PUT":
+                            //            //Update the settings
+                            //            using (var body = context.Request.InputStream)
+                            //            using (var reader = new StreamReader(body, context.Request.ContentEncoding))
+                            //            {
+                            //                //Get the data that was sent to us
+                            //                var json = reader.ReadToEnd();
+
+                            //                //Use it to update our settings
+                            //                UpdateSettings(JsonConvert.DeserializeObject<MySettings>(json));
+
+                            //                //Return 204 No Content to say we did it successfully
+                            //                response.StatusCode = 204;
+                            //                handled = true;
+                            //            }
+                            //            break;
+                            //    }
+                            //    break;
                     }
                     if (!handled)
                     {

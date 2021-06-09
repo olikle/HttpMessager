@@ -37,7 +37,8 @@ namespace HttpMessager
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void FrmMessager_Load(object sender, EventArgs e)
         {
-            tabControl.SelectedTab = tpLog;
+            //http://localhost:8888/message?text=Hallo
+            //tabControl.SelectedTab = tpLog;
             btnStartListener.Enabled = false;
             btnStopListener.Enabled = true;
 
@@ -124,5 +125,20 @@ namespace HttpMessager
         }
         #endregion
 
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            JsonRPCRequest jsonRPCRequest = new JsonRPCRequest("SendMessage");
+            jsonRPCRequest.Params.message = txtMessage.Text;
+
+            var addresses = txtAdresses.Text.Split(",");
+            foreach(var address in addresses)
+            {
+                Communication.SendMessageAsync($"http://{address}:8888/jsonrpc", jsonRPCRequest.ToString());
+            }
+            //
+            // do not call on localhost
+            //var result = Communication.SendMessageAsync("http://localhost:8888/jsonrpc", jsonRPCRequest.ToString()).GetAwaiter().GetResult();
+            //libStatus.Items.Add($"Result: {result}");
+        }
     }
 }

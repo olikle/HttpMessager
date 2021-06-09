@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +32,31 @@ namespace HttpMessager
             if (!string.IsNullOrEmpty(input))
                 toastContentBuilder.AddText(input);
             toastContentBuilder.Show();
+        }
+
+        /// <summary>
+        /// Sends the message.
+        /// </summary>
+        /// <param name="callUrl">The call URL.</param>
+        /// <returns></returns>
+        public static async Task<string> SendMessageAsync(string callUrl, string json)
+        {
+            var handler = new HttpClientHandler();
+            HttpClient httpClient = new HttpClient(handler);
+
+            var bodyContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage callResult = null;
+            callResult = await httpClient.PostAsync(callUrl, bodyContent);
+            var resultContent = await callResult.Content.ReadAsStringAsync();
+            if (callResult.IsSuccessStatusCode)
+            {
+                return resultContent;
+            }
+            else
+            {
+                return $"Error: {resultContent} {callResult.StatusCode}";
+            }
         }
 
     }

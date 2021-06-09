@@ -34,6 +34,7 @@ namespace HttpMessager
             this.tsslText = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMessage = new System.Windows.Forms.TabPage();
+            this.btnSend = new System.Windows.Forms.Button();
             this.txtAdresses = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtMessage = new System.Windows.Forms.TextBox();
@@ -87,6 +88,7 @@ namespace HttpMessager
             // 
             // tpMessage
             // 
+            this.tpMessage.Controls.Add(this.btnSend);
             this.tpMessage.Controls.Add(this.txtAdresses);
             this.tpMessage.Controls.Add(this.label2);
             this.tpMessage.Controls.Add(this.txtMessage);
@@ -99,6 +101,16 @@ namespace HttpMessager
             this.tpMessage.Text = "Message";
             this.tpMessage.UseVisualStyleBackColor = true;
             // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(68, 218);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(83, 24);
+            this.btnSend.TabIndex = 4;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
             // txtAdresses
             // 
             this.txtAdresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -107,6 +119,7 @@ namespace HttpMessager
             this.txtAdresses.Name = "txtAdresses";
             this.txtAdresses.Size = new System.Drawing.Size(511, 23);
             this.txtAdresses.TabIndex = 3;
+            this.txtAdresses.Text = "localhost";
             // 
             // label2
             // 
@@ -126,7 +139,7 @@ namespace HttpMessager
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(513, 133);
             this.txtMessage.TabIndex = 1;
-            this.txtMessage.Text = "http://localhost:8888/message?text=Hallo";
+            this.txtMessage.Text = "Message from HttpMessager, check it out!";
             // 
             // label1
             // 
@@ -231,6 +244,7 @@ namespace HttpMessager
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnStopListener;
         private System.Windows.Forms.Button btnStartListener;
+        private System.Windows.Forms.Button btnSend;
     }
 }
 
