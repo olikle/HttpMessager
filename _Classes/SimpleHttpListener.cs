@@ -57,7 +57,7 @@ namespace HttpMessager
             //IPAddress[] addrs = Array.FindAll(Dns.GetHostEntry(string.Empty).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
             //foreach (IPAddress addr in addrs)
             //{
-            //    _httpListener.Prefixes.Add($"http://{addr}:{_port}/");
+                //    _httpListener.Prefixes.Add($"http://{addr}:{_port}/");
             //}
             //_httpListener.Start();
             //Automatically set the IP address
@@ -71,6 +71,11 @@ namespace HttpMessager
         /// </summary>
         public void StartWebServer()
         {
+            IPAddress[] addrs = Array.FindAll(Dns.GetHostEntry(string.Empty).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
+            foreach (IPAddress addr in addrs)
+            {
+                OnRecieveStatus(new HttpMessagerEventArgs("status", $"IPAddress: {addr}"));
+            }
             OnRecieveStatus(new HttpMessagerEventArgs("status", "Start Webserver"));
 
             _keepGoing = true;
