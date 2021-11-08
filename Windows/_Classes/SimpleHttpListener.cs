@@ -76,7 +76,7 @@ namespace HttpMessager
             {
                 OnRecieveStatus(new HttpMessagerEventArgs("status", $"IPAddress: {addr}"));
             }
-            OnRecieveStatus(new HttpMessagerEventArgs("status", "Start Webserver"));
+            OnRecieveStatus(new HttpMessagerEventArgs("status", $"Start Webserver on port {_port}"));
 
             _keepGoing = true;
 
