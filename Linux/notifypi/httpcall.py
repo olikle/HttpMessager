@@ -46,7 +46,8 @@ def RequestJsonRPC(jsonrpcId, resultFrom, resultMessage, jsonrpcMethod = None):
 # this is the primary thread mentioned in Part 2
 if __name__ == '__main__':
     try:
-        ipAddress = 'http://192.168.0.156:30120/'
+        #ipAddress = 'http://192.168.0.156:30120/'
+        ipAddress = 'http://192.168.0.121:30120/'
         #ipAddress = 'http://192.168.0.156:8888/'
         #ipAddress = 'http://192.168.35.30:8888/'
 

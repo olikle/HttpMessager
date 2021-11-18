@@ -15,8 +15,34 @@ import asyncio
 import RPi.GPIO as GPIO
 import sys
 import requests
+import json
+from datetime import datetime
 
 loop = None
+
+def RequestJsonRPC(jsonrpcId, resultFrom, resultMessage, jsonrpcMethod = None):
+    jsonrpcReturn = {
+        "jsonrpc": "2.0"
+    }
+        # send id if exists, otherwise -1
+    if jsonrpcId == None:
+        jsonrpcReturn["id"] = -1
+    else:
+        jsonrpcReturn["id"] = jsonrpcId
+
+    # send method only the exists
+    if jsonrpcMethod != None:
+        jsonrpcReturn["method"] = jsonrpcMethod
+
+    jsonrpcParams = {
+        "from": resultFrom,
+        "message" : resultMessage
+    }
+    jsonrpcReturn["params"] = jsonrpcParams
+
+    return jsonrpcReturn
+
+
 
 def message_manager_f():
     print (":P message_manager_f()")
@@ -30,9 +56,20 @@ def motion_sensor(self, message_manager_f):
     loop.call_soon_threadsafe(self.message_manager_f)
 
 def buttonpressed_callback(self):
-    print("buttonpressed")
-    #r = requests.get('http://192.168.0.30/')
-    #print(r)
+    print("The bell rings...")
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+
+    requestJsonPRC = RequestJsonRPC("1", "ringpi", "The Bell rings... (" + current_time + ")...", "SendMessage")
+
+    ipList = ["192.168.0.120", "192.168.0.121"]
+    for ipAddress in ipList:
+       print("call...", ipAddress, requestJsonPRC)
+       #r = requests.post(ipAddress + "jsonrpc", data = requestJsonPRC)
+       r = requests.post("http://" + ipAddress + ":30120" + "/jsonrpc", data = json.dumps(requestJsonPRC) )
+       #r = requests.get(ipAddress + "message?text=Hallo")
+       print(r.text)
+
 
 # this is the primary thread mentioned in Part 2
 if __name__ == '__main__':
