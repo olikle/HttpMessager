@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HttpMessager
+namespace HttpMessenger
 {
     /// <summary>
     //  var json = "{\"jsonrpc\":\"2.0\",\"method\":\"GUI.ShowNotification\",\"params\":{\"title\":\"This is the title of the message\",\"message\":\"This is the body of the message\"},\"id\":1}";
@@ -41,6 +41,7 @@ namespace HttpMessager
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
+            /*
             //  var json = "{\"jsonrpc\":\"2.0\",\"method\":\"GUI.ShowNotification\",\"params\":{\"title\":\"This is the title of the message\",\"message\":\"This is the body of the message\"},\"id\":1}";
             var json = "{";
             json += "\"jsonrpc\" : \"" + Version + "\", ";
@@ -50,6 +51,7 @@ namespace HttpMessager
             json += "}";
 
             return json;
+            */
         }
     }
     /// <summary>

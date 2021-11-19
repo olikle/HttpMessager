@@ -1,7 +1,7 @@
 ﻿
-namespace HttpMessager
+namespace HttpMessenger
 {
-    partial class FrmMessager
+    partial class FrmMessenger
     {
         /// <summary>
         ///  Required designer variable.
@@ -75,8 +75,8 @@ namespace HttpMessager
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tpMessage);
             this.tabControl.Controls.Add(this.tpLog);
@@ -113,7 +113,7 @@ namespace HttpMessager
             // 
             // txtAdresses
             // 
-            this.txtAdresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtAdresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAdresses.Location = new System.Drawing.Point(68, 168);
             this.txtAdresses.Name = "txtAdresses";
@@ -132,14 +132,14 @@ namespace HttpMessager
             // 
             // txtMessage
             // 
-            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMessage.Location = new System.Drawing.Point(68, 14);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(513, 133);
             this.txtMessage.TabIndex = 1;
-            this.txtMessage.Text = "Message from HttpMessager, check it out!";
+            this.txtMessage.Text = "Message from HttpMessenger, check it out!";
             // 
             // label1
             // 
@@ -196,8 +196,8 @@ namespace HttpMessager
             // 
             // libStatus
             // 
-            this.libStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.libStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.libStatus.FormattingEnabled = true;
             this.libStatus.ItemHeight = 15;
@@ -206,7 +206,7 @@ namespace HttpMessager
             this.libStatus.Size = new System.Drawing.Size(573, 199);
             this.libStatus.TabIndex = 0;
             // 
-            // FrmMessager
+            // FrmMessenger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -214,8 +214,8 @@ namespace HttpMessager
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
-            this.Name = "FrmMessager";
-            this.Text = "Http Messager";
+            this.Name = "FrmMessenger";
+            this.Text = "Http Messenger";
             this.Load += new System.EventHandler(this.FrmMessager_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

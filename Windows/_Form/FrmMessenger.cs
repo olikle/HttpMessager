@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HttpMessager
+namespace HttpMessenger
 {
-    public partial class FrmMessager : Form
+    public partial class FrmMessenger : Form
     {
         #region variable
         /// <summary>
@@ -21,9 +21,9 @@ namespace HttpMessager
 
         #region contructor
         /// <summary>
-        /// Initializes a new instance of the <see cref="FrmMessager"/> class.
+        /// Initializes a new instance of the <see cref="FrmMessenger"/> class.
         /// </summary>
-        public FrmMessager()
+        public FrmMessenger()
         {
             InitializeComponent();
         }
@@ -94,8 +94,8 @@ namespace HttpMessager
         /// Handles the RecieveMessage event of the _simpleHttpListener control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="HttpMessagerEventArgs"/> instance containing the event data.</param>
-        private void SimpleHttpListener_RecieveMessage(object sender, HttpMessagerEventArgs e)
+        /// <param name="e">The <see cref="HttpMessengerEventArgs" /> instance containing the event data.</param>
+        private void SimpleHttpListener_RecieveMessage(object sender, HttpMessengerEventArgs e)
         {
             ShowMessage("Incoming Message", e.Message);
         }
@@ -104,10 +104,10 @@ namespace HttpMessager
         /// Handles the RecieveStatus event of the _simpleHttpListener control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="HttpMessagerEventArgs"/> instance containing the event data.</param>
-        private void SimpleHttpListener_RecieveStatus(object sender, HttpMessagerEventArgs e)
+        /// <param name="e">The <see cref="HttpMessengerEventArgs"/> instance containing the event data.</param>
+        private void SimpleHttpListener_RecieveStatus(object sender, HttpMessengerEventArgs e)
         {
-            libStatus.Items.Insert(0, DateTime.Now.ToString("HH:mm:ss") + ", " + e.Message);
+            AddStatus(DateTime.Now.ToString("HH:mm:ss") + ", " + e.Message);
         }
         #endregion
 
@@ -118,7 +118,7 @@ namespace HttpMessager
         /// <param name="message">The message.</param>
         public void ShowMessage(string title, string message)
         {
-            libStatus.Items.Add($"Show Message: {title}, {message}");
+            AddStatus($"Show Message: {title}, {message}");
             Communication.ToastNotification(title, message, 0);
             FrmMessage frmMessage = new FrmMessage();
             frmMessage.Text = title;
@@ -128,21 +128,38 @@ namespace HttpMessager
         }
         #endregion
 
-        private void btnSend_Click(object sender, EventArgs e)
+        #region btnSend_Click
+        /// <summary>
+        /// Handles the Click event of the btnSend control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private async void btnSend_Click(object sender, EventArgs e)
         {
             JsonRPCRequest jsonRPCRequest = new JsonRPCRequest("SendMessage");
             jsonRPCRequest.Params.from = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString();
             jsonRPCRequest.Params.message = txtMessage.Text;
 
             var addresses = txtAdresses.Text.Split(",");
-            foreach(var address in addresses)
+            foreach (var address in addresses)
             {
-                Communication.SendMessageAsync($"http://{address}:8888/jsonrpc", jsonRPCRequest.ToString());
+                await Communication.SendMessageAsync($"http://{address}:30120/jsonrpc", jsonRPCRequest.ToString());
             }
             //
             // do not call on localhost
             //var result = Communication.SendMessageAsync("http://localhost:8888/jsonrpc", jsonRPCRequest.ToString()).GetAwaiter().GetResult();
-            //libStatus.Items.Add($"Result: {result}");
+            //AddStatus($"Result: {result}");
         }
+        #endregion
+        #region AddStatus
+        /// <summary>
+        /// Adds the status.
+        /// </summary>
+        /// <param name="status">The status.</param>
+        public void AddStatus(string status)
+        {
+            libStatus.Items.Insert(0, DateTime.Now.ToString("HH:mm:ss") + ", " + status);
+        }
+        #endregion
     }
 }

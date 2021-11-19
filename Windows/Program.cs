@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HttpMessager
+namespace HttpMessenger
 {
     static class Program
     {
@@ -14,10 +14,11 @@ namespace HttpMessager
         [STAThread]
         static void Main()
         {
+            //https://stackoverflow.com/questions/995195/how-can-i-make-a-net-windows-forms-application-that-only-runs-in-the-system-tra
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMessager());
+            Application.Run(new FrmMessenger());
         }
     }
 }

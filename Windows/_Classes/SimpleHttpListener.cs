@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
-namespace HttpMessager
+namespace HttpMessenger
 {
     /// <summary>
     /// http://www.gabescode.com/dotnet/2018/11/01/basic-HttpListener-web-service.html
@@ -74,9 +74,9 @@ namespace HttpMessager
             IPAddress[] addrs = Array.FindAll(Dns.GetHostEntry(string.Empty).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
             foreach (IPAddress addr in addrs)
             {
-                OnRecieveStatus(new HttpMessagerEventArgs("status", $"IPAddress: {addr}"));
+                OnRecieveStatus(new HttpMessengerEventArgs("status", $"IPAddress: {addr}"));
             }
-            OnRecieveStatus(new HttpMessagerEventArgs("status", $"Start Webserver on port {_port}"));
+            OnRecieveStatus(new HttpMessengerEventArgs("status", $"Start Webserver on port {_port}"));
 
             _keepGoing = true;
 
@@ -89,7 +89,7 @@ namespace HttpMessager
         /// </summary>
         public void StopWebServer()
         {
-            OnRecieveStatus(new HttpMessagerEventArgs("status", "Stop Webserver"));
+            OnRecieveStatus(new HttpMessengerEventArgs("status", "Stop Webserver"));
             _keepGoing = false;
             lock (_httpListener)
             {
@@ -113,7 +113,7 @@ namespace HttpMessager
         private async Task MainLoop()
         {
             _httpListener.Start();
-            OnRecieveStatus(new HttpMessagerEventArgs("status", "Mainloop..."));
+            OnRecieveStatus(new HttpMessengerEventArgs("status", "Mainloop..."));
             while (_keepGoing)
             {
                 try
@@ -150,8 +150,8 @@ namespace HttpMessager
                     //OnRecieveStatus(new HttpMessagerEventArgs("status", $"AbsolutePath: {context.Request.Url.AbsolutePath}"));
                     //OnRecieveStatus(new HttpMessagerEventArgs("status", $"Query {context.Request.Url.Query}"));
                     //OnRecieveStatus(new HttpMessagerEventArgs("status", $"Fragment {context.Request.Url.Fragment}"));
-                    OnRecieveStatus(new HttpMessagerEventArgs("status", $"{context.Request.Url.Host}"));
-                    OnRecieveStatus(new HttpMessagerEventArgs("status", $"PathAndQuery {context.Request.Url.PathAndQuery}"));
+                    OnRecieveStatus(new HttpMessengerEventArgs("status", $"{context.Request.Url.Host}"));
+                    OnRecieveStatus(new HttpMessengerEventArgs("status", $"PathAndQuery {context.Request.Url.PathAndQuery}"));
                     switch (context.Request.Url.AbsolutePath)
                     {
                         //This is where we do different things depending on the URL
@@ -168,7 +168,7 @@ namespace HttpMessager
                             {
                                 var message = context.Request.QueryString["text"];
                                 if (string.IsNullOrEmpty(message)) message = "no message text set";
-                                OnRecieveMessage(new HttpMessagerEventArgs("message", message));
+                                OnRecieveMessage(new HttpMessengerEventArgs("message", message));
                                 CreateResponse(response, "{ \"status\": \"OK\"");
                                 handled = true;
                                 break;
@@ -188,8 +188,8 @@ namespace HttpMessager
                                     if (jsonRPCRequest.Method == "SendMessage")
                                     {
                                         var message = "From: " + jsonRPCRequest.Params.from.ToString() + "\n\n" + jsonRPCRequest.Params.message.ToString();
-                                        OnRecieveMessage(new HttpMessagerEventArgs("json", message));
-                                        //OnRecieveMessage(new HttpMessagerEventArgs("json", JsonConvert.SerializeObject(jsonRPCRequest.Params)));
+                                        OnRecieveMessage(new HttpMessengerEventArgs("json", message));
+                                        //OnRecieveMessage(new HttpMessengerEventArgs("json", JsonConvert.SerializeObject(jsonRPCRequest.Params)));
                                     }
 
                                     JsonRPCRespone jsonRPCRespone = new JsonRPCRespone();
@@ -248,7 +248,7 @@ namespace HttpMessager
                 }
                 catch (Exception e)
                 {
-                    OnRecieveStatus(new HttpMessagerEventArgs("error", $"Error {e.Message}"));
+                    OnRecieveStatus(new HttpMessengerEventArgs("error", $"Error {e.Message}"));
                     //Return the exception details the client - you may or may not want to do this
                     CreateResponse(response, JsonConvert.SerializeObject(e), null, 500);
                     //response.StatusCode = 500;
@@ -298,8 +298,8 @@ namespace HttpMessager
         /// <summary>
         /// Raises the <see cref="E:RecieveMessage" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="HttpMessagerEventArgs"/> instance containing the event data.</param>
-        protected virtual void OnRecieveMessage(HttpMessagerEventArgs e)
+        /// <param name="e">The <see cref="HttpMessengerEventArgs" /> instance containing the event data.</param>
+        protected virtual void OnRecieveMessage(HttpMessengerEventArgs e)
         {
             if (RecieveMessage != null) RecieveMessage(this, e);
         }
@@ -311,8 +311,8 @@ namespace HttpMessager
         /// <summary>
         /// Raises the <see cref="E:RecieveStatus" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="HttpMessagerEventArgs"/> instance containing the event data.</param>
-        protected virtual void OnRecieveStatus(HttpMessagerEventArgs e)
+        /// <param name="e">The <see cref="HttpMessengerEventArgs" /> instance containing the event data.</param>
+        protected virtual void OnRecieveStatus(HttpMessengerEventArgs e)
         {
             if (RecieveStatus != null) RecieveStatus(this, e);
         }
@@ -332,7 +332,7 @@ namespace HttpMessager
             "<!DOCTYPE>" +
             "<html>" +
             "  <head>" +
-            "    <title>Http Messager</title>" +
+            "    <title>Http Messenger</title>" +
             "  </head>" +
             "  <body>" +
             "    <p>Page Views: {0}</p>" +
@@ -436,12 +436,12 @@ namespace HttpMessager
         #endregion
     }
 
-    #region HttpMessagerEventArgs class
+    #region HttpMessengerEventArgs class
     /// <summary>
     /// ScanItemEventArgs
     /// </summary>
     /// <seealso cref="System.EventArgs" />
-    public class HttpMessagerEventArgs : System.EventArgs
+    public class HttpMessengerEventArgs : System.EventArgs
     {
         #region variables
         /// <summary>
@@ -466,7 +466,7 @@ namespace HttpMessager
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="message">The message.</param>
-        public HttpMessagerEventArgs(string type, string message)
+        public HttpMessengerEventArgs(string type, string message)
         {
             this.Type = type;
             this.Message = message;
@@ -475,12 +475,12 @@ namespace HttpMessager
     }
     #endregion
 
-    #region HttpMessagerEventHandler Declaration
+    #region HttpMessengerEventHandler Declaration
     /// <summary>
-    /// HttpMessagerEventHandler Declaration
+    /// HttpMessengerEventHandler Declaration
     /// </summary>
     /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="ScanItemEventArgs"/> instance containing the event data.</param>
-    public delegate void HttpMessagerEventHandler(object sender, HttpMessagerEventArgs e);
+    /// <param name="e">The <see cref="ScanItemEventArgs" /> instance containing the event data.</param>
+    public delegate void HttpMessagerEventHandler(object sender, HttpMessengerEventArgs e);
     #endregion
 }
