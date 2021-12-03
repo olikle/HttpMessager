@@ -44,6 +44,7 @@ namespace HttpMessenger
             this.btnStartListener = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.libStatus = new System.Windows.Forms.ListBox();
+            this.btnSoundTest = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpMessage.SuspendLayout();
@@ -75,8 +76,8 @@ namespace HttpMessenger
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tpMessage);
             this.tabControl.Controls.Add(this.tpLog);
@@ -88,6 +89,7 @@ namespace HttpMessenger
             // 
             // tpMessage
             // 
+            this.tpMessage.Controls.Add(this.btnSoundTest);
             this.tpMessage.Controls.Add(this.btnSend);
             this.tpMessage.Controls.Add(this.txtAdresses);
             this.tpMessage.Controls.Add(this.label2);
@@ -113,7 +115,7 @@ namespace HttpMessenger
             // 
             // txtAdresses
             // 
-            this.txtAdresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtAdresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAdresses.Location = new System.Drawing.Point(68, 168);
             this.txtAdresses.Name = "txtAdresses";
@@ -132,7 +134,7 @@ namespace HttpMessenger
             // 
             // txtMessage
             // 
-            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMessage.Location = new System.Drawing.Point(68, 14);
             this.txtMessage.Multiline = true;
@@ -196,8 +198,8 @@ namespace HttpMessenger
             // 
             // libStatus
             // 
-            this.libStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.libStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.libStatus.FormattingEnabled = true;
             this.libStatus.ItemHeight = 15;
@@ -205,6 +207,16 @@ namespace HttpMessenger
             this.libStatus.Name = "libStatus";
             this.libStatus.Size = new System.Drawing.Size(573, 199);
             this.libStatus.TabIndex = 0;
+            // 
+            // btnSoundTest
+            // 
+            this.btnSoundTest.Location = new System.Drawing.Point(496, 218);
+            this.btnSoundTest.Name = "btnSoundTest";
+            this.btnSoundTest.Size = new System.Drawing.Size(83, 24);
+            this.btnSoundTest.TabIndex = 5;
+            this.btnSoundTest.Text = "Sound Test";
+            this.btnSoundTest.UseVisualStyleBackColor = true;
+            this.btnSoundTest.Click += new System.EventHandler(this.btnSoundTest_Click);
             // 
             // FrmMessenger
             // 
@@ -245,6 +257,7 @@ namespace HttpMessenger
         private System.Windows.Forms.Button btnStopListener;
         private System.Windows.Forms.Button btnStartListener;
         private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Button btnSoundTest;
     }
 }
 

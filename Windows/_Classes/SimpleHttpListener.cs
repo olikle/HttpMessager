@@ -319,6 +319,7 @@ namespace HttpMessenger
         #endregion
     }
 
+    #region SimpleHttpListenerX (not used)
     class SimpleHttpListenerX
     {
         #region variable
@@ -435,6 +436,8 @@ namespace HttpMessenger
         }
         #endregion
     }
+    #endregion
+
 
     #region HttpMessengerEventArgs class
     /// <summary>

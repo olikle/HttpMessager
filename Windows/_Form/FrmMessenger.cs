@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,9 @@ namespace HttpMessenger
         /// The simple HTTP listener
         /// </summary>
         private SimpleHttpListener _simpleHttpListener;
+
+        string soundFile = "";
+
         #endregion
 
         #region contructor
@@ -26,6 +30,8 @@ namespace HttpMessenger
         public FrmMessenger()
         {
             InitializeComponent();
+            soundFile = Configuration.SoundFile;
+            MessageBox.Show(soundFile);
         }
         #endregion
 
@@ -107,7 +113,7 @@ namespace HttpMessenger
         /// <param name="e">The <see cref="HttpMessengerEventArgs"/> instance containing the event data.</param>
         private void SimpleHttpListener_RecieveStatus(object sender, HttpMessengerEventArgs e)
         {
-            AddStatus(DateTime.Now.ToString("HH:mm:ss") + ", " + e.Message);
+            AddStatus(e.Message);
         }
         #endregion
 
@@ -120,11 +126,17 @@ namespace HttpMessenger
         {
             AddStatus($"Show Message: {title}, {message}");
             Communication.ToastNotification(title, message, 0);
+
             FrmMessage frmMessage = new FrmMessage();
             frmMessage.Text = title;
             frmMessage.message = message;
             frmMessage.Show();
             frmMessage.Focus();
+
+            if (!string.IsNullOrEmpty(soundFile))
+            {
+                Sound.PlaySoundFile(soundFile);
+            }
         }
         #endregion
 
@@ -158,7 +170,44 @@ namespace HttpMessenger
         /// <param name="status">The status.</param>
         public void AddStatus(string status)
         {
-            libStatus.Items.Insert(0, DateTime.Now.ToString("HH:mm:ss") + ", " + status);
+            libStatus.Items.Insert(0, DateTime.Now.ToString("dd:MM:yyyy") + "-" + DateTime.Now.ToString("HH:mm:ss") + ", " + status);
+        }
+        #endregion
+
+        #region PlaySound
+        private async Task<bool> PlaySound()
+        {
+            // not work so
+            if (string.IsNullOrEmpty(soundFile))
+                return false;
+            await Task.Run( () => Sound.PlaySoundFile(soundFile) );
+            
+            return true;
+        }
+        #endregion
+
+
+        #region btnSoundTest_Click
+        private void btnSoundTest_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(soundFile))
+            {
+                if (File.Exists(soundFile))
+                {
+                    Sound.PlaySoundFile(soundFile);
+                    MessageBox.Show($"Sound file '{soundFile}' played.");
+                }
+                else
+                {
+                    MessageBox.Show($"File not found '{soundFile}'");
+                }
+                //var play = PlaySound();
+                //MessageBox.Show($"Sound play = {play.Result}");
+            }
+            else
+            {
+                MessageBox.Show("No Sound file defined");
+            }
         }
         #endregion
     }
