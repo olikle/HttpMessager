@@ -31,7 +31,6 @@ namespace HttpMessenger
         {
             InitializeComponent();
             soundFile = Configuration.SoundFile;
-            MessageBox.Show(soundFile);
         }
         #endregion
 

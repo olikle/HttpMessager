@@ -22,6 +22,12 @@ namespace HttpMessenger
         /// <param name="type">The type.</param>
         public static void ToastNotification(string title, string input, int type)
         {
+            //    TargetFramework has to be set in project file to:
+            //    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+            //
+            //
+
+
             // Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
             ToastContentBuilder toastContentBuilder = new ToastContentBuilder()
                 .AddArgument("action", "viewConversation")
