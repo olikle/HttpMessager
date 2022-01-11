@@ -16,9 +16,10 @@ import RPi.GPIO as GPIO
 import sys
 import requests
 import json
-from datetime import datetime
+import datetime
 
 loop = None
+lastTime = None
 
 def RequestJsonRPC(jsonrpcId, resultFrom, resultMessage, jsonrpcMethod = None):
     jsonrpcReturn = {
@@ -56,11 +57,21 @@ def motion_sensor(self, message_manager_f):
     loop.call_soon_threadsafe(self.message_manager_f)
 
 def buttonpressed_callback(self):
+    global lastTime
     print("The bell rings...")
-    now = datetime.now()
+    now = datetime.datetime.now()
+    current_date = now.strftime("%d.%m.%Y")
     current_time = now.strftime("%H:%M:%S")
+    timeToCheck = now + datetime.timedelta(seconds=-10)
 
-    requestJsonPRC = RequestJsonRPC("1", "ringpi", "The Bell rings... (" + current_time + ")...", "SendMessage")
+    if lastTime is not None:
+       if lastTime > timeToCheck:
+          print ("time is to short between the events - no message was send")
+          return
+
+    lastTime = now
+
+    requestJsonPRC = RequestJsonRPC("1", "ringpi", "The Bell rings... (" + current_date + "," + current_time + ")...", "SendMessage")
 
     ipList = ["192.168.0.120", "192.168.0.121"]
     for ipAddress in ipList:
@@ -69,6 +80,7 @@ def buttonpressed_callback(self):
        r = requests.post("http://" + ipAddress + ":30120" + "/jsonrpc", data = json.dumps(requestJsonPRC) )
        #r = requests.get(ipAddress + "message?text=Hallo")
        print(r.text)
+
 
 
 # this is the primary thread mentioned in Part 2

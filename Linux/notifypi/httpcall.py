@@ -4,26 +4,28 @@
 # sudo python -m pip install asyncio
 #
 # https://www.python-forum.de/viewtopic.php?t=41836
-# sudo apt-get install python3-dev python3-rpi.gpio
-# sudo apt-get install python3-rpi.gpio
+# sudo apt-get install python3-dev
 #
 # https://2.python-requests.org/en/master/user/quickstart/#custom-headers
 # pip install requests
-# 
+#
 #
 
 import asyncio
-import RPi.GPIO as GPIO
 import sys
 import requests
 import json
-from datetime import datetime
+import time
+#from datetime import datetime
+import datetime
+import helper
 
 loop = None
+lastTime = None
 
 def RequestJsonRPC(jsonrpcId, resultFrom, resultMessage, jsonrpcMethod = None):
     jsonrpcReturn = {
-        "jsonrpc": "2.0"          
+        "jsonrpc": "2.0"
     }
         # send id if exists, otherwise -1
     if jsonrpcId == None:
@@ -37,7 +39,7 @@ def RequestJsonRPC(jsonrpcId, resultFrom, resultMessage, jsonrpcMethod = None):
 
     jsonrpcParams = {
         "from": resultFrom,
-        "message" : resultMessage         
+        "message" : resultMessage
     }
     jsonrpcReturn["params"] = jsonrpcParams
 
@@ -45,31 +47,52 @@ def RequestJsonRPC(jsonrpcId, resultFrom, resultMessage, jsonrpcMethod = None):
 
 # this is the primary thread mentioned in Part 2
 if __name__ == '__main__':
-    try:
-        #ipAddress = 'http://192.168.0.156:30120/'
-        ipAddress = 'http://192.168.0.121:30120/'
-        #ipAddress = 'http://192.168.0.156:8888/'
-        #ipAddress = 'http://192.168.35.30:8888/'
+        helper.init("notifyOnRing.ini", "notifyOnRing.log")
+    #try:
+        print("first sleep 3 seconds")
+        #time.sleep(3)
+        configPortNo = helper.get_config_item("RPCSettings", "Port")
+        configNotifyIps = helper.get_config_item("RPCSettings", "notifyips")
 
-        now = datetime.now()
+        if configPortNo == None or configNotifyIps == None:
+            print("portNo or notifyips missing")
+            sys.exit()
+
+        print("portNo",configPortNo)
+        print("confignotifyips",configNotifyIps)
+
+        notifyIps = configNotifyIps.split(",")
+        print("notifyips",notifyIps)
+
+        now = datetime.datetime.now()
+        current_date = now.strftime("%d.%m.%Y")
         current_time = now.strftime("%H:%M:%S")
+        timeToCheck = now + datetime.timedelta(seconds=3)
 
-        requestJsonPRC = RequestJsonRPC("1", "ringpi", "ping from ring (" + current_time + ")...", "SendMessage")
-        print("call...", ipAddress, requestJsonPRC)
-        
-        #r = requests.post(ipAddress + "jsonrpc", data = requestJsonPRC)
-        r = requests.post(ipAddress + "jsonrpc", data = json.dumps(requestJsonPRC) )
+        lastTime = None
+        lastTime = now
 
-        #r = requests.get(ipAddress + "message?text=Hallo")
-        print(r.text)
+        if lastTime is not None and lastTime < timeToCheck:
+           print ("time is to short - exit...")
+        else:
+           print ("time is ok")
+
+        requestJsonRPC = RequestJsonRPC("1", "ringpi", "ping from ringpi (" + current_date + ", " + current_time + ")...", "SendMessage")
+
+        for ipAddress in notifyIps:
+            url = "http://" + ipAddress + ":" + configPortNo + "/jsonrpc"
+            helper.logInfo("request", url, requestJsonRPC)
+            r = requests.post(url, data = json.dumps(requestJsonRPC) )
+            helper.logInfo("response", r.reason, r.text)
+            #print(r)
+            #print(r.text)
 
 
-        print(r)
-    except KeyboardInterrupt:
-        print("Process interrupted")
-    except :
-        print("Error:", sys.exc_info()[0])
-    finally:
-        print("correct close")
+    #except KeyboardInterrupt:
+    #    print("Process interrupted")
+    #except :
+    #    print("Error:", sys.exc_info()[0])
+    #finally:
+    #    print("correct close")
 
 
