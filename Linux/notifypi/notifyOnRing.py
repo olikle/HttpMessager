@@ -17,6 +17,7 @@ import sys
 import requests
 import json
 import datetime
+import helper
 
 loop = None
 lastTime = None
@@ -46,10 +47,10 @@ def RequestJsonRPC(jsonrpcId, resultFrom, resultMessage, jsonrpcMethod = None):
 
 
 def message_manager_f():
-    print (":P message_manager_f()")
+    helper.logInfo(":P message_manager_f()")
 
 def motion_sensor(self, message_manager_f):
-    print ("motion_sensor")
+    helper.logInfo("motion_sensor")
     if loop is None:
         print(":(")
         return       # should not come to this
@@ -58,7 +59,7 @@ def motion_sensor(self, message_manager_f):
 
 def buttonpressed_callback(self):
     global lastTime
-    print("The bell rings...")
+    helper.logInfo("The bell rings...")
     now = datetime.datetime.now()
     current_date = now.strftime("%d.%m.%Y")
     current_time = now.strftime("%H:%M:%S")
@@ -66,27 +67,47 @@ def buttonpressed_callback(self):
 
     if lastTime is not None:
        if lastTime > timeToCheck:
-          print ("time is to short between the events - no message was send")
+          helper.logInfo("time is to short between the events - no message was send")
           return
 
     lastTime = now
 
     requestJsonPRC = RequestJsonRPC("1", "ringpi", "The Bell rings... (" + current_date + "," + current_time + ")...", "SendMessage")
 
-    ipList = ["192.168.0.120", "192.168.0.121"]
-    for ipAddress in ipList:
-       print("call...", ipAddress, requestJsonPRC)
-       #r = requests.post(ipAddress + "jsonrpc", data = requestJsonPRC)
-       r = requests.post("http://" + ipAddress + ":30120" + "/jsonrpc", data = json.dumps(requestJsonPRC) )
-       #r = requests.get(ipAddress + "message?text=Hallo")
-       print(r.text)
+    configPortNo = helper.get_config_item("RPCSettings", "Port")
+    configNotifyIps = helper.get_config_item("RPCSettings", "notifyips")
+    notifyIps = configNotifyIps.split(",")
+
+    for ipAddress in notifyIps:
+        url = "http://" + ipAddress + ":" + configPortNo + "/jsonrpc"
+        helper.logInfo("request", url, requestJsonPRC)
+        r = requests.post(url, data = json.dumps(requestJsonPRC) )
+        helper.logInfo("response", r.reason, r.text)
+
+    #ipList = ["192.168.0.120", "192.168.0.121"]
+    #for ipAddress in ipList:
+    #   print("call...", ipAddress, requestJsonPRC)
+    #   #r = requests.post(ipAddress + "jsonrpc", data = requestJsonPRC)
+    #   r = requests.post("http://" + ipAddress + ":30120" + "/jsonrpc", data = json.dumps(requestJsonPRC) )
+    #   #r = requests.get(ipAddress + "message?text=Hallo")
+    #   print(r.text)
 
 
 
 # this is the primary thread mentioned in Part 2
 if __name__ == '__main__':
+    helper.init("notifyOnRing.ini", "notifyOnRing.log")
+    # check ports and ips
+    configPortNo = helper.get_config_item("RPCSettings", "Port")
+    configNotifyIps = helper.get_config_item("RPCSettings", "notifyips")
+    if configPortNo == None or configNotifyIps == None:
+        print("portNo or notifyips missing")
+        sys.exit()
+    helper.logInfo("portNo",configPortNo)
+    helper.logInfo("confignotifyips",configNotifyIps)
+
     try:
-        print ("wait for GPIO...")
+        helper.logInfo("wait for GPIO...")
         # setup the GPIO
         GPIO.setwarnings(True)
         GPIO.setmode(GPIO.BCM)
@@ -101,11 +122,11 @@ if __name__ == '__main__':
         loop = asyncio.get_event_loop()
         loop.run_forever()
     except KeyboardInterrupt:
-        print("Process interrupted")
+        helper.logInfo("Process KeyboardInterrupt interrupted")
     except :
-        print("Error:", sys.exc_info()[0])
+        helper.logError("Error:", sys.exc_info()[0])
     finally:
-        print("correct close")
+        helper.logInfo("correct close")
         if loop is not None:
             loop.close()
         # cleanup

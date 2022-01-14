@@ -47,7 +47,7 @@ def RequestJsonRPC(jsonrpcId, resultFrom, resultMessage, jsonrpcMethod = None):
 
 # this is the primary thread mentioned in Part 2
 if __name__ == '__main__':
-        helper.init("notifyOnRing.ini", "notifyOnRing.log")
+        helper.init("notifyOnRing.ini", "httpcall.log")
     #try:
         print("first sleep 3 seconds")
         #time.sleep(3)
