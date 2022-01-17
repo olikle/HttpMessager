@@ -11,6 +11,10 @@ using System.Windows.Forms;
 
 namespace HttpMessenger
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.Form" />
     public partial class FrmMessenger : Form
     {
         #region variable
@@ -134,7 +138,7 @@ namespace HttpMessenger
 
             if (!string.IsNullOrEmpty(soundFile))
             {
-                Sound.PlaySoundFile(soundFile);
+                Sound.LoadAndPlaySoundFile(soundFile);
             }
         }
         #endregion
@@ -162,6 +166,7 @@ namespace HttpMessenger
             //AddStatus($"Result: {result}");
         }
         #endregion
+
         #region AddStatus
         /// <summary>
         /// Adds the status.
@@ -173,27 +178,28 @@ namespace HttpMessenger
         }
         #endregion
 
-        #region PlaySound
-        private async Task<bool> PlaySound()
+        #region btnIncomeMessageTest_Click, btnSoundTest_Click
+        /// <summary>
+        /// Handles the Click event of the btnIncomeMessageTest control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void btnIncomeMessageTest_Click(object sender, EventArgs e)
         {
-            // not work so
-            if (string.IsNullOrEmpty(soundFile))
-                return false;
-            await Task.Run( () => Sound.PlaySoundFile(soundFile) );
-            
-            return true;
+            ShowMessage("Local machine", "Income message output test...");
         }
-        #endregion
-
-
-        #region btnSoundTest_Click
+        /// <summary>
+        /// Handles the Click event of the btnSoundTest control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void btnSoundTest_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(soundFile))
             {
                 if (File.Exists(soundFile))
                 {
-                    Sound.PlaySoundFile(soundFile);
+                    Sound.LoadAndPlaySoundFile(soundFile);
                     MessageBox.Show($"Sound file '{soundFile}' played.");
                 }
                 else

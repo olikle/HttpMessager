@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -11,6 +12,49 @@ namespace HttpMessenger
 {
     class Sound
     {
+        /// <summary>
+        /// Loads the and play sound file.
+        /// </summary>
+        /// <param name="wavFile">The wav file.</param>
+        public static void LoadAndPlaySoundFile(string wavFile)
+        {
+            SoundPlayer playerStatic = new SoundPlayer();
+            // Note: You may need to change the location specified based on
+            // the location of the sound to be played.
+            playerStatic.SoundLocation = wavFile;
+            playerStatic.Play();
+        }
+
+        private SoundPlayer Player = new SoundPlayer();
+
+        //https://docs.microsoft.com/de-de/dotnet/api/system.media.soundplayer.loadasync?view=dotnet-plat-ext-6.0
+        /// <summary>
+        /// Loads the sound asynchronous. Preload
+        /// </summary>
+        /// <param name="wavFile">The wav file.</param>
+        public void LoadSoundAsync(string wavFile)
+        {
+            // Note: You may need to change the location specified based on
+            // the location of the sound to be played.
+            this.Player.SoundLocation = wavFile;
+            this.Player.LoadAsync();
+        }
+        /// <summary>
+        /// Plays the preloaded sound file.
+        /// </summary>
+        public void PlaySoundFile()
+        {
+            this.Player.Play();
+        }
+
+        private void Player_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (this.Player.IsLoadCompleted)
+            {
+                this.Player.PlaySync();
+            }
+        }
+        /*
         //
         // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interop/how-to-use-platform-invoke-to-play-a-wave-file
         // 
@@ -42,5 +86,6 @@ namespace HttpMessenger
 
             return PlaySound(wavFile, new System.IntPtr(), soundFlag);
         }
+        */
     }
 }

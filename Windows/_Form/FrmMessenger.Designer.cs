@@ -34,6 +34,7 @@ namespace HttpMessenger
             this.tsslText = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMessage = new System.Windows.Forms.TabPage();
+            this.btnSoundTest = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
             this.txtAdresses = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,7 +45,7 @@ namespace HttpMessenger
             this.btnStartListener = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.libStatus = new System.Windows.Forms.ListBox();
-            this.btnSoundTest = new System.Windows.Forms.Button();
+            this.btnIncomeMessageTest = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpMessage.SuspendLayout();
@@ -89,6 +90,7 @@ namespace HttpMessenger
             // 
             // tpMessage
             // 
+            this.tpMessage.Controls.Add(this.btnIncomeMessageTest);
             this.tpMessage.Controls.Add(this.btnSoundTest);
             this.tpMessage.Controls.Add(this.btnSend);
             this.tpMessage.Controls.Add(this.txtAdresses);
@@ -102,6 +104,16 @@ namespace HttpMessenger
             this.tpMessage.TabIndex = 0;
             this.tpMessage.Text = "Message";
             this.tpMessage.UseVisualStyleBackColor = true;
+            // 
+            // btnSoundTest
+            // 
+            this.btnSoundTest.Location = new System.Drawing.Point(496, 218);
+            this.btnSoundTest.Name = "btnSoundTest";
+            this.btnSoundTest.Size = new System.Drawing.Size(83, 24);
+            this.btnSoundTest.TabIndex = 5;
+            this.btnSoundTest.Text = "Sound Test";
+            this.btnSoundTest.UseVisualStyleBackColor = true;
+            this.btnSoundTest.Click += new System.EventHandler(this.btnSoundTest_Click);
             // 
             // btnSend
             // 
@@ -208,15 +220,15 @@ namespace HttpMessenger
             this.libStatus.Size = new System.Drawing.Size(573, 199);
             this.libStatus.TabIndex = 0;
             // 
-            // btnSoundTest
+            // btnIncomeMessageTest
             // 
-            this.btnSoundTest.Location = new System.Drawing.Point(496, 218);
-            this.btnSoundTest.Name = "btnSoundTest";
-            this.btnSoundTest.Size = new System.Drawing.Size(83, 24);
-            this.btnSoundTest.TabIndex = 5;
-            this.btnSoundTest.Text = "Sound Test";
-            this.btnSoundTest.UseVisualStyleBackColor = true;
-            this.btnSoundTest.Click += new System.EventHandler(this.btnSoundTest_Click);
+            this.btnIncomeMessageTest.Location = new System.Drawing.Point(361, 218);
+            this.btnIncomeMessageTest.Name = "btnIncomeMessageTest";
+            this.btnIncomeMessageTest.Size = new System.Drawing.Size(129, 24);
+            this.btnIncomeMessageTest.TabIndex = 6;
+            this.btnIncomeMessageTest.Text = "Income Message Test";
+            this.btnIncomeMessageTest.UseVisualStyleBackColor = true;
+            this.btnIncomeMessageTest.Click += new System.EventHandler(this.btnIncomeMessageTest_Click);
             // 
             // FrmMessenger
             // 
@@ -258,6 +270,7 @@ namespace HttpMessenger
         private System.Windows.Forms.Button btnStartListener;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnSoundTest;
+        private System.Windows.Forms.Button btnIncomeMessageTest;
     }
 }
 
