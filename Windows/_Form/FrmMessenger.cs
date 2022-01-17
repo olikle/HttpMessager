@@ -51,6 +51,8 @@ namespace HttpMessenger
             btnStartListener.Enabled = false;
             btnStopListener.Enabled = true;
 
+            chbAddToAutostart.Checked = Functions.ExistsInAutostart();
+
             //_simpleHttpListener = new SimpleHttpListener(8888);
             //_simpleHttpListener = new SimpleHttpListener(8355);
             //_simpleHttpListener = new SimpleHttpListener(8080);
@@ -215,5 +217,13 @@ namespace HttpMessenger
             }
         }
         #endregion
+
+        private void chbAddToAutostart_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbAddToAutostart.Checked)
+                Functions.AddToAutostart();
+            else
+                Functions.RemoveAutostart();
+        }
     }
 }

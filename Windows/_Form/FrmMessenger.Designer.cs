@@ -34,6 +34,7 @@ namespace HttpMessenger
             this.tsslText = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMessage = new System.Windows.Forms.TabPage();
+            this.btnIncomeMessageTest = new System.Windows.Forms.Button();
             this.btnSoundTest = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
             this.txtAdresses = new System.Windows.Forms.TextBox();
@@ -45,7 +46,7 @@ namespace HttpMessenger
             this.btnStartListener = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.libStatus = new System.Windows.Forms.ListBox();
-            this.btnIncomeMessageTest = new System.Windows.Forms.Button();
+            this.chbAddToAutostart = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpMessage.SuspendLayout();
@@ -90,6 +91,7 @@ namespace HttpMessenger
             // 
             // tpMessage
             // 
+            this.tpMessage.Controls.Add(this.chbAddToAutostart);
             this.tpMessage.Controls.Add(this.btnIncomeMessageTest);
             this.tpMessage.Controls.Add(this.btnSoundTest);
             this.tpMessage.Controls.Add(this.btnSend);
@@ -104,6 +106,16 @@ namespace HttpMessenger
             this.tpMessage.TabIndex = 0;
             this.tpMessage.Text = "Message";
             this.tpMessage.UseVisualStyleBackColor = true;
+            // 
+            // btnIncomeMessageTest
+            // 
+            this.btnIncomeMessageTest.Location = new System.Drawing.Point(361, 218);
+            this.btnIncomeMessageTest.Name = "btnIncomeMessageTest";
+            this.btnIncomeMessageTest.Size = new System.Drawing.Size(129, 24);
+            this.btnIncomeMessageTest.TabIndex = 6;
+            this.btnIncomeMessageTest.Text = "Income Message Test";
+            this.btnIncomeMessageTest.UseVisualStyleBackColor = true;
+            this.btnIncomeMessageTest.Click += new System.EventHandler(this.btnIncomeMessageTest_Click);
             // 
             // btnSoundTest
             // 
@@ -220,15 +232,16 @@ namespace HttpMessenger
             this.libStatus.Size = new System.Drawing.Size(573, 199);
             this.libStatus.TabIndex = 0;
             // 
-            // btnIncomeMessageTest
+            // chbAddToAutostart
             // 
-            this.btnIncomeMessageTest.Location = new System.Drawing.Point(361, 218);
-            this.btnIncomeMessageTest.Name = "btnIncomeMessageTest";
-            this.btnIncomeMessageTest.Size = new System.Drawing.Size(129, 24);
-            this.btnIncomeMessageTest.TabIndex = 6;
-            this.btnIncomeMessageTest.Text = "Income Message Test";
-            this.btnIncomeMessageTest.UseVisualStyleBackColor = true;
-            this.btnIncomeMessageTest.Click += new System.EventHandler(this.btnIncomeMessageTest_Click);
+            this.chbAddToAutostart.AutoSize = true;
+            this.chbAddToAutostart.Location = new System.Drawing.Point(69, 262);
+            this.chbAddToAutostart.Name = "chbAddToAutostart";
+            this.chbAddToAutostart.Size = new System.Drawing.Size(167, 19);
+            this.chbAddToAutostart.TabIndex = 7;
+            this.chbAddToAutostart.Text = "Runs when Windows starts";
+            this.chbAddToAutostart.UseVisualStyleBackColor = true;
+            this.chbAddToAutostart.CheckedChanged += new System.EventHandler(this.chbAddToAutostart_CheckedChanged);
             // 
             // FrmMessenger
             // 
@@ -271,6 +284,7 @@ namespace HttpMessenger
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnSoundTest;
         private System.Windows.Forms.Button btnIncomeMessageTest;
+        private System.Windows.Forms.CheckBox chbAddToAutostart;
     }
 }
 
