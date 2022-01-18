@@ -29,11 +29,12 @@ namespace HttpMessenger
         /// </summary>
         private void InitializeComponent()
         {
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.components = new System.ComponentModel.Container();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsslText = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMessage = new System.Windows.Forms.TabPage();
+            this.chbAddToAutostart = new System.Windows.Forms.CheckBox();
             this.btnIncomeMessageTest = new System.Windows.Forms.Button();
             this.btnSoundTest = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
@@ -46,20 +47,12 @@ namespace HttpMessenger
             this.btnStartListener = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.libStatus = new System.Windows.Forms.ListBox();
-            this.chbAddToAutostart = new System.Windows.Forms.CheckBox();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpMessage.SuspendLayout();
             this.tpLog.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(595, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
             // 
             // statusStrip1
             // 
@@ -106,6 +99,17 @@ namespace HttpMessenger
             this.tpMessage.TabIndex = 0;
             this.tpMessage.Text = "Message";
             this.tpMessage.UseVisualStyleBackColor = true;
+            // 
+            // chbAddToAutostart
+            // 
+            this.chbAddToAutostart.AutoSize = true;
+            this.chbAddToAutostart.Location = new System.Drawing.Point(69, 262);
+            this.chbAddToAutostart.Name = "chbAddToAutostart";
+            this.chbAddToAutostart.Size = new System.Drawing.Size(167, 19);
+            this.chbAddToAutostart.TabIndex = 7;
+            this.chbAddToAutostart.Text = "Runs when Windows starts";
+            this.chbAddToAutostart.UseVisualStyleBackColor = true;
+            this.chbAddToAutostart.CheckedChanged += new System.EventHandler(this.chbAddToAutostart_CheckedChanged);
             // 
             // btnIncomeMessageTest
             // 
@@ -232,16 +236,11 @@ namespace HttpMessenger
             this.libStatus.Size = new System.Drawing.Size(573, 199);
             this.libStatus.TabIndex = 0;
             // 
-            // chbAddToAutostart
+            // notifyIcon1
             // 
-            this.chbAddToAutostart.AutoSize = true;
-            this.chbAddToAutostart.Location = new System.Drawing.Point(69, 262);
-            this.chbAddToAutostart.Name = "chbAddToAutostart";
-            this.chbAddToAutostart.Size = new System.Drawing.Size(167, 19);
-            this.chbAddToAutostart.TabIndex = 7;
-            this.chbAddToAutostart.Text = "Runs when Windows starts";
-            this.chbAddToAutostart.UseVisualStyleBackColor = true;
-            this.chbAddToAutostart.CheckedChanged += new System.EventHandler(this.chbAddToAutostart_CheckedChanged);
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
             // FrmMessenger
             // 
@@ -250,9 +249,9 @@ namespace HttpMessenger
             this.ClientSize = new System.Drawing.Size(595, 433);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
             this.Name = "FrmMessenger";
             this.Text = "Http Messenger";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMessenger_FormClosing);
             this.Load += new System.EventHandler(this.FrmMessager_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -266,8 +265,6 @@ namespace HttpMessenger
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tsslText;
         private System.Windows.Forms.TabControl tabControl;
@@ -285,6 +282,7 @@ namespace HttpMessenger
         private System.Windows.Forms.Button btnSoundTest;
         private System.Windows.Forms.Button btnIncomeMessageTest;
         private System.Windows.Forms.CheckBox chbAddToAutostart;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

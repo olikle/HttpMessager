@@ -4,3 +4,7 @@
 2022-01-17 15:37:14,568 INFO: response, OK, {"version":"2.0","result":"Message send","id":"1"}
 2022-01-17 15:37:29,505 INFO: request, http://192.168.0.120:30120/jsonrpc, {'jsonrpc': '2.0', 'method': 'SendMessage', 'id': '1', 'params': {'from': 'ringpi', 'message': 'ping from ringpi (17.01.2022, 15:37:29)...'}}
 2022-01-17 15:37:29,543 INFO: response, OK, {"version":"2.0","result":"Message send","id":"1"}
+2022-01-18 10:02:15,274 INFO: request, http://192.168.0.120:30120/jsonrpc, {'method': 'SendMessage', 'jsonrpc': '2.0', 'params': {'message': 'ping from ringpi (18.01.2022, 10:02:15)...', 'from': 'ringpi'}, 'id': '1'}
+2022-01-18 10:02:15,782 INFO: response, OK, {"version":"2.0","result":"Message send","id":"1"}
+2022-01-18 10:56:35,569 INFO: request, http://192.168.0.120:30120/jsonrpc, {'method': 'SendMessage', 'jsonrpc': '2.0', 'id': '1', 'params': {'from': 'ringpi', 'message': 'ping from ringpi (18.01.2022, 10:56:35)...'}}
+2022-01-18 10:56:35,931 INFO: response, OK, {"version":"2.0","result":"Message send","id":"1"}

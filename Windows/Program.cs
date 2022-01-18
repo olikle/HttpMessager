@@ -16,10 +16,25 @@ namespace HttpMessenger
         {
             var port = Configuration.IPConnection().Port;
 
-            //https://stackoverflow.com/questions/995195/how-can-i-make-a-net-windows-forms-application-that-only-runs-in-the-system-tra
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // not work - show in form
+            //using (NotifyIcon notifyIcon = new NotifyIcon())
+            //{
+            //    notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            //    //icon.ContextMenu = new ContextMenu(new MenuItem[] {
+            //    //    new MenuItem("Show form", (s, e) => {new Form1().Show();}),
+            //    //    new MenuItem("Exit", (s, e) => { Application.Exit(); }),
+            //    //});
+            //    notifyIcon.Visible = true;
+
+            //    Application.Run(new FrmMessenger());
+            //    notifyIcon.Visible = false;
+            //}
+
+
             Application.Run(new FrmMessenger());
         }
     }

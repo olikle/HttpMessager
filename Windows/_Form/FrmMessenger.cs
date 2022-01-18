@@ -24,7 +24,10 @@ namespace HttpMessenger
         private SimpleHttpListener _simpleHttpListener;
 
         string soundFile = "";
+        
+        private FormWindowState _lastFormWindowState;
 
+        private bool _closeFromNotifyIcon = false;
         #endregion
 
         #region contructor
@@ -60,8 +63,100 @@ namespace HttpMessenger
             _simpleHttpListener.RecieveStatus += SimpleHttpListener_RecieveStatus;
             _simpleHttpListener.RecieveMessage += SimpleHttpListener_RecieveMessage;
             _simpleHttpListener.StartWebServer();
+            
+            SetNotifyIcon();
+            
+            _lastFormWindowState = this.WindowState;
         }
+        private void FrmMessenger_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // close if Application.Exit();
+            if (_closeFromNotifyIcon) return;
+            this.Hide();
+            MessageBox.Show("The HttpMessenger only hides but runs in background.\nTo exit HttpMessenger use the SysTray Icon Context menu.", "Hide", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            e.Cancel = true;
+        }
+        #endregion
 
+        #region Notify Icon
+        // https://stackoverflow.com/questions/995195/how-can-i-make-a-net-windows-forms-application-that-only-runs-in-the-system-tra
+        // https://stackoverflow.com/questions/1617784/how-to-start-the-application-directly-in-system-tray-net-c
+        /// <summary>
+        /// Setnotifies the icon.
+        /// </summary>
+        void SetNotifyIcon()
+        {
+            //notifyIcon1.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            notifyIcon1.Icon = this.Icon;
+            notifyIcon1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            notifyIcon1.ContextMenuStrip.Items.Add("Show", null, this.ContextMenuShow_Click);
+            notifyIcon1.ContextMenuStrip.Items.Add("Hide", null, this.ContextMenuHide_Click);
+            notifyIcon1.ContextMenuStrip.Items.Add("Exit Application", null, this.ContextMenuExit_Click);
+            //notifyIcon1.ContextMenuStrip.Items.Add("Exit Application", null, (s, e) => { Application.Exit(); });
+            notifyIcon1.Visible = true;
+        }
+        /// <summary>
+        /// Handles the DoubleClick event of the notifyIcon1 control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            _lastFormWindowState = FormWindowState.Normal;
+            this.WindowState = FormWindowState.Normal;
+            this.Focus();
+        }
+        /// <summary>
+        /// Handles the Click event of the ContextMenuShow control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        void ContextMenuShow_Click(object sender, EventArgs e)
+        {
+            this.Show();
+            _lastFormWindowState = FormWindowState.Normal;
+            this.WindowState = FormWindowState.Normal;
+            this.Focus();
+        }
+        /// <summary>
+        /// Handles the Click event of the ContextMenuHide control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        void ContextMenuHide_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+        /// <summary>
+        /// Handles the Click event of the ContextMenuExit control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        void ContextMenuExit_Click(object sender, EventArgs e)
+        {
+            _closeFromNotifyIcon = true;
+            Application.Exit();
+        }
+        #endregion
+
+        #region WindowsState
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.ClientSizeChanged" /> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+        protected override void OnClientSizeChanged(EventArgs e)
+        {
+            if (this.WindowState != _lastFormWindowState)
+            {
+                if (this.WindowState == FormWindowState.Minimized)
+                {
+                    this.Hide();
+                }
+                _lastFormWindowState = this.WindowState;
+            }
+            base.OnClientSizeChanged(e);
+        }
         #endregion
 
         #region UI
@@ -218,6 +313,12 @@ namespace HttpMessenger
         }
         #endregion
 
+        #region chbAddToAutostart_CheckedChanged
+        /// <summary>
+        /// Handles the CheckedChanged event of the chbAddToAutostart control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void chbAddToAutostart_CheckedChanged(object sender, EventArgs e)
         {
             if (chbAddToAutostart.Checked)
@@ -225,5 +326,7 @@ namespace HttpMessenger
             else
                 Functions.RemoveAutostart();
         }
+        #endregion
+
     }
 }

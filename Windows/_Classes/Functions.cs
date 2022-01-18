@@ -55,5 +55,7 @@ namespace HttpMessenger
             registryKey.DeleteValue(appName, true);
         }
         #endregion
+
+        #endregion
     }
 }
