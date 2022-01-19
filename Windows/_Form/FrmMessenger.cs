@@ -73,7 +73,7 @@ namespace HttpMessenger
             // close if Application.Exit();
             if (_closeFromNotifyIcon) return;
             this.Hide();
-            MessageBox.Show("The HttpMessenger only hides but runs in background.\nTo exit HttpMessenger use the SysTray Icon Context menu.", "Hide", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("The HttpMessenger only hides but runs in background.\n\nTo end the programm use the systray icon context menu.", "Hide", MessageBoxButtons.OK, MessageBoxIcon.Information);
             e.Cancel = true;
         }
         #endregion
