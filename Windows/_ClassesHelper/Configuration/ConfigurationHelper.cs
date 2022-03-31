@@ -140,8 +140,10 @@ namespace okTools.ConfigurationHelper
         {
             if (configurationRoot != null)
                 return configurationRoot;
+            //AppDomain.CurrentDomain.BaseDirectory
+            //Directory.GetCurrentDirectory()
             var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile(ConfigurationFileName);
             configurationRoot = configurationBuilder.Build();
             return configurationRoot;
