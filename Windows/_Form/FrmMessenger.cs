@@ -28,6 +28,8 @@ namespace HttpMessenger
         private FormWindowState _lastFormWindowState;
 
         private bool _closeFromNotifyIcon = false;
+
+        private bool formStart = true;
         #endregion
 
         #region contructor
@@ -54,7 +56,9 @@ namespace HttpMessenger
             btnStartListener.Enabled = false;
             btnStopListener.Enabled = true;
 
-            chbAddToAutostart.Checked = Functions.ExistsInAutostart();
+            formStart = true;
+            chbAddToAutostart.Checked = Functions.ExistsInAutostart(false);
+            formStart = false;
 
             //_simpleHttpListener = new SimpleHttpListener(8888);
             //_simpleHttpListener = new SimpleHttpListener(8355);
@@ -73,6 +77,7 @@ namespace HttpMessenger
             // close if Application.Exit();
             if (_closeFromNotifyIcon) return;
             this.Hide();
+            if (e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.ApplicationExitCall || e.CloseReason == CloseReason.TaskManagerClosing) return;
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 MessageBox.Show("The HttpMessenger only hides but runs in background.\n\nTo end the programm use the systray icon context menu.", "Hide", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -324,6 +329,7 @@ namespace HttpMessenger
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void chbAddToAutostart_CheckedChanged(object sender, EventArgs e)
         {
+            if (formStart) return;
             if (chbAddToAutostart.Checked)
                 Functions.AddToAutostart();
             else

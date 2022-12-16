@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.IO;
 using Microsoft.Win32;
+using System;
 
 namespace HttpMessenger
 {
@@ -20,11 +21,20 @@ namespace HttpMessenger
         /// Existses the in autostart.
         /// </summary>
         /// <returns></returns>
-        public static bool ExistsInAutostart()
+        public static bool ExistsInAutostart(bool showErrorMessagr)
         {
+            string appPath = "";
             string appName = Application.ProductName;
-            RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(registryRunPath, true);
-            string appPath = (string)registryKey.GetValue(appName);
+            try
+            {
+                RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(registryRunPath, true);
+                appPath = (string)registryKey.GetValue(appName);
+            }catch(Exception ex)
+            {
+                if (!showErrorMessagr) return true;
+                MessageBox.Show($"ExistsInAutostart Error: {ex.Message}\nApp: {appName}\nregistryRunPath: {registryRunPath}\n\ne.g. Permissions missing.");
+                return true;
+            }
             return !string.IsNullOrEmpty(appPath);
         }
         /// <summary>
@@ -34,14 +44,21 @@ namespace HttpMessenger
         /// </summary>
         public static void AddToAutostart()
         {
-            if (ExistsInAutostart()) return;
-            var appExecutablePath = Application.ExecutablePath;
-            string appName = Application.ProductName;
-            string appPath = Application.ExecutablePath;
-            if (Path.HasExtension(appPath))
+            if (ExistsInAutostart(true)) return;
+            string appExecutablePath = "", appName = "", appPath = "";
+            try
             {
-                RegistryKey startKey = Registry.LocalMachine.OpenSubKey(registryRunPath, true);
-                startKey.SetValue(appName, appPath);
+                appExecutablePath = Application.ExecutablePath;
+                appName = Application.ProductName;
+                appPath = Application.ExecutablePath;
+                if (Path.HasExtension(appPath))
+                {
+                    RegistryKey startKey = Registry.LocalMachine.OpenSubKey(registryRunPath, true);
+                    startKey.SetValue(appName, appPath);
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show($"AddToAutostart Error: {ex.Message}\nappName: {appName}\nappPath: {appPath}\nappExecutablePath: {appExecutablePath}\nregistryRunPath: {registryRunPath}\n\ne.g. Permissions missing.");
             }
         }
         /// <summary>
@@ -49,10 +66,18 @@ namespace HttpMessenger
         /// </summary>
         public static void RemoveAutostart()
         {
-            if (!ExistsInAutostart()) return;
-            string appName = Application.ProductName;
-            RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(registryRunPath, true);
-            registryKey.DeleteValue(appName, true);
+            if (!ExistsInAutostart(true)) return;
+            string appName = "";
+            try
+            {
+                appName = Application.ProductName;
+                RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(registryRunPath, true);
+                registryKey.DeleteValue(appName, true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"RemoveAutostart Error: {ex.Message}\nappName: {appName}\nregistryRunPath: {registryRunPath}\n\ne.g. Permissions missing.");
+            }
         }
         #endregion
 
