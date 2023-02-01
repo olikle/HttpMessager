@@ -1,7 +1,7 @@
 ﻿
-namespace HttpMessenger
+namespace HttpMessager
 {
-    partial class FrmMessenger
+    partial class FrmMessager
     {
         /// <summary>
         ///  Required designer variable.
@@ -169,7 +169,7 @@ namespace HttpMessenger
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(513, 133);
             this.txtMessage.TabIndex = 1;
-            this.txtMessage.Text = "Message from HttpMessenger, check it out!";
+            this.txtMessage.Text = "Message from HttpMessager, check it out!";
             // 
             // label1
             // 
@@ -242,7 +242,7 @@ namespace HttpMessenger
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
-            // FrmMessenger
+            // FrmMessager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -251,7 +251,7 @@ namespace HttpMessenger
             this.Controls.Add(this.statusStrip1);
             this.Name = "FrmMessenger";
             this.Text = "Http Messenger";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMessenger_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMessager_FormClosing);
             this.Load += new System.EventHandler(this.FrmMessager_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

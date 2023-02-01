@@ -1,6 +1,10 @@
 ﻿@echo off
 
-set ThisSolution=HttpMessenger
+echo "use BuildPackage!!!!"
+pause
+exit 1
+
+set ThisSolution=HttpMessager
 
 set pwd=%~dp0
 set PackageDir=%pwd%Packages
@@ -20,9 +24,9 @@ if exist %PackageDir% rmdir /s /q %PackageDir%
 mkdir %PackageDir%
 echo created directory %PackageDir%
 
-rem dotnet publish HttpMessenger.csproj -c Release -r win-x64 --self-contained -o %PackageDir%
+rem dotnet publish HttpMessager.csproj -c Release -r win-x64 --self-contained -o %PackageDir%
 
-dotnet publish HttpMessenger.csproj -c Release -r win-x64 --no-self-contained -o %PackageDir%
+dotnet publish HttpMessager.csproj -c Release -r win-x64 --no-self-contained -o %PackageDir%
 rem remove appsettings.json
 if exist %PackageDir%\appsettings.json del %PackageDir%\appsettings.json
 

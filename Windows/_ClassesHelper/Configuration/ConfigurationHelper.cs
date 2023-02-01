@@ -145,6 +145,10 @@ namespace okTools.ConfigurationHelper
             var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile(ConfigurationFileName);
+            // load Local config
+            if (File.Exists(ConfigurationFileName.Replace(".json", ".local.json")))
+                configurationBuilder.AddJsonFile(ConfigurationFileName.Replace(".json", ".local.json"));
+
             configurationRoot = configurationBuilder.Build();
             return configurationRoot;
         }

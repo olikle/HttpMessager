@@ -1,10 +1,11 @@
+using AutoUpdaterDotNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HttpMessenger
+namespace HttpMessager
 {
     static class Program
     {
@@ -14,6 +15,10 @@ namespace HttpMessenger
         [STAThread]
         static void Main()
         {
+            AutoUpdater.ShowSkipButton = false;
+            AutoUpdater.ShowRemindLaterButton = false;
+            AutoUpdater.Start(Configuration.AutoUpdaterUrl);
+
             var port = Configuration.IPConnection().Port;
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
@@ -30,12 +35,12 @@ namespace HttpMessenger
             //    //});
             //    notifyIcon.Visible = true;
 
-            //    Application.Run(new FrmMessenger());
+            //    Application.Run(new FrmMessager());
             //    notifyIcon.Visible = false;
             //}
 
 
-            Application.Run(new FrmMessenger());
+            Application.Run(new FrmMessager());
         }
     }
 }

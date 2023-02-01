@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HttpMessenger
+namespace HttpMessager
 {
     public partial class FrmMessage : Form
     {

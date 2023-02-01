@@ -1,5 +1,5 @@
 ﻿
-namespace HttpMessenger
+namespace HttpMessager
 {
     partial class FrmMessage
     {

@@ -1,6 +1,8 @@
 # Deployment Packages
 Deployment/*HttpMessenger.zip
 Deployment/Package/*
+Deployment/BuildDotnetPackage.xml
+appsettings.local.json
 
 
 ## Ignore Visual Studio temporary files, build results, and

@@ -3,7 +3,7 @@ using System.IO;
 using Microsoft.Win32;
 using System;
 
-namespace HttpMessenger
+namespace HttpMessager
 {
     /// <summary>
     /// </summary>

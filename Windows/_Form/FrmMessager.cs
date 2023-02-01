@@ -9,13 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HttpMessenger
+namespace HttpMessager
 {
     /// <summary>
     /// 
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Form" />
-    public partial class FrmMessenger : Form
+    public partial class FrmMessager : Form
     {
         #region variable
         /// <summary>
@@ -36,7 +36,7 @@ namespace HttpMessenger
         /// <summary>
         /// Initializes a new instance of the <see cref="FrmMessenger"/> class.
         /// </summary>
-        public FrmMessenger()
+        public FrmMessager()
         {
             InitializeComponent();
             soundFile = Configuration.SoundFile;
@@ -72,7 +72,7 @@ namespace HttpMessenger
             
             _lastFormWindowState = this.WindowState;
         }
-        private void FrmMessenger_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmMessager_FormClosing(object sender, FormClosingEventArgs e)
         {
             // close if Application.Exit();
             if (_closeFromNotifyIcon) return;
@@ -80,7 +80,7 @@ namespace HttpMessenger
             if (e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.ApplicationExitCall || e.CloseReason == CloseReason.TaskManagerClosing) return;
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                MessageBox.Show("The HttpMessenger only hides but runs in background.\n\nTo end the programm use the systray icon context menu.", "Hide", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The HttpMessager only hides but runs in background.\n\nTo end the programm use the systray icon context menu.", "Hide", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             e.Cancel = true;
         }
@@ -208,8 +208,8 @@ namespace HttpMessenger
         /// Handles the RecieveMessage event of the _simpleHttpListener control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="HttpMessengerEventArgs" /> instance containing the event data.</param>
-        private void SimpleHttpListener_RecieveMessage(object sender, HttpMessengerEventArgs e)
+        /// <param name="e">The <see cref="HttpMessagerEventArgs" /> instance containing the event data.</param>
+        private void SimpleHttpListener_RecieveMessage(object sender, HttpMessagerEventArgs e)
         {
             ShowMessage("Incoming Message", e.Message);
         }
@@ -218,8 +218,8 @@ namespace HttpMessenger
         /// Handles the RecieveStatus event of the _simpleHttpListener control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="HttpMessengerEventArgs"/> instance containing the event data.</param>
-        private void SimpleHttpListener_RecieveStatus(object sender, HttpMessengerEventArgs e)
+        /// <param name="e">The <see cref="HttpMessagerEventArgs"/> instance containing the event data.</param>
+        private void SimpleHttpListener_RecieveStatus(object sender, HttpMessagerEventArgs e)
         {
             AddStatus(e.Message);
         }
