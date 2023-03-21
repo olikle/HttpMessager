@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoUpdaterDotNET;
+using HttpMessager.Properties;
+using okTools;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,7 +27,7 @@ namespace HttpMessager
         private SimpleHttpListener _simpleHttpListener;
 
         string soundFile = "";
-        
+
         private FormWindowState _lastFormWindowState;
 
         private bool _closeFromNotifyIcon = false;
@@ -51,6 +54,23 @@ namespace HttpMessager
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void FrmMessager_Load(object sender, EventArgs e)
         {
+            System.Timers.Timer timer = new System.Timers.Timer
+            {
+                // check every 24 hours
+                Interval = 24 * 60 * 60 * 1000,
+                SynchronizingObject = this
+            };
+            timer.Elapsed += delegate
+            {
+                AutoUpdater.ShowSkipButton = false;
+                AutoUpdater.ShowRemindLaterButton = false;
+                AutoUpdater.Start(Configuration.AutoUpdaterUrl);
+            };
+            timer.Start();
+
+
+
+
             //http://localhost:8888/message?text=Hallo
             //tabControl.SelectedTab = tpLog;
             btnStartListener.Enabled = false;
@@ -67,9 +87,9 @@ namespace HttpMessager
             _simpleHttpListener.RecieveStatus += SimpleHttpListener_RecieveStatus;
             _simpleHttpListener.RecieveMessage += SimpleHttpListener_RecieveMessage;
             _simpleHttpListener.StartWebServer();
-            
+
             SetNotifyIcon();
-            
+
             _lastFormWindowState = this.WindowState;
         }
         private void FrmMessager_FormClosing(object sender, FormClosingEventArgs e)
@@ -78,9 +98,11 @@ namespace HttpMessager
             if (_closeFromNotifyIcon) return;
             this.Hide();
             if (e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.ApplicationExitCall || e.CloseReason == CloseReason.TaskManagerClosing) return;
-            if (e.CloseReason == CloseReason.UserClosing)
+            var showUserClosingInfo = Settings.GetLastValue("ShowUserClosingInfo");
+            if (e.CloseReason == CloseReason.UserClosing && showUserClosingInfo != "true")
             {
                 MessageBox.Show("The HttpMessager only hides but runs in background.\n\nTo end the programm use the systray icon context menu.", "Hide", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Settings.SetLastValue("ShowUserClosingInfo", "true");
             }
             e.Cancel = true;
         }

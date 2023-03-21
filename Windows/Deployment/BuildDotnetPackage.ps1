@@ -43,7 +43,9 @@ $global:packageName = "";
 $global:packageFolder = "";
 $global:publishFolder = "";
 
+#
 # load the config file xml
+#
 function LoadConfig($configFile)
 {
     if ($configFile -eq $null -or $configFile -eq "") { $configFile = "BuildDotnetPackage.xml"; }
@@ -57,7 +59,9 @@ function LoadConfig($configFile)
 
     $configXml.Load($configFile);
 }
+#
 # load the CSProject file
+#
 function LoadCSProject()
 {
     write-host "Load Project File";
@@ -84,7 +88,9 @@ function LoadCSProject()
 
     $projectXml.Load($projectFilePath);
 }
+#
 # get the value of a config node
+#
 function GetConfigValue([string]$xPath, [string]$defaultValue)
 {
     write-host "GetConfigValue $xPath";
@@ -95,18 +101,43 @@ function GetConfigValue([string]$xPath, [string]$defaultValue)
     if ($foundNode -eq $null -and $defaultValue -ne $null) { return $defaultValue}
     return $foundNode.innerText;
 }
+#
 # get the value of a project node
+#
 function GetProjectValue([string]$name)
 {
     write-host "GetProjectValue $name";
     $foundNode = $projectXml.DocumentElement.SelectSingleNode("PropertyGroup/$name");
     write-host "GetProjectValue found '$($foundNode.innerText)'";
 
-    if ($foundNode -eq $null) { return ""}
+    if ($foundNode -eq $null) { return "" }
     return $foundNode.innerText;
 }
+
+#
+# DeleteFromFileSystem
+#
+function DeleteFromFileSystem([string]$itemname)
+{
+    if ($itemname -eq $null -or $itemname -eq "" -or (Test-Path -path $itemname) -eq $False) { 
+        return;
+    }
+
+    write-host "Remove $itemname";
+    if (Test-Path -Path $itemname -PathType Leaf)
+    {
+        Remove-Item -Path $itemname;
+    }
+    else
+    {
+        Remove-Item -Path $itemname –recurse;
+    }
+}
+
+#
 # Update Version Number
 # <UpdateVersionNumber>true</UpdateVersionNumber>
+#
 function UpdateVersionNumber()
 {
     if ((GetConfigValue "UpdateVersionNumber").ToLowerInvariant() -ne "true") { return; };
@@ -150,10 +181,7 @@ function BuildPublishPackage()
     $publishOut = "$publishFolder\$projectName";
     $zipOut = "$packageFolder\$packageName.zip";
 
-    # TODO: find out: set options within one field
-    $publishOptions = GetConfigValue "DotnetPublish/Options";
-    $publishOption2 = GetConfigValue "DotnetPublish/Option2";
-    
+    $publishOptions = GetConfigValue "DotnetPublish/Options";   
     #& $dotnet publish $projectRoot\$projectName.csproj -c Release -r $publishOption1 $publishOption2 -o $publishOut; # -v n=normal, d=detailed
     $command = """$dotnet"" publish ""$projectRoot\$projectName.csproj"" -c Release $publishOptions -o ""$publishOut""";
     write-host "execute $command";
@@ -164,24 +192,22 @@ function BuildPublishPackage()
     $removeNodes = $configXml.DocumentElement.SelectNodes("DotnetPublish/DeleteAfterBuild");
     foreach($removeNode in $removeNodes)
     {
-        $removeFile = $removeNode.innerText.replace("%PackageDir%", "$publishOut");
-        write-host "Remove $removeFile";
-        # TODO: Remove directories
-        #write-host "Remove $removeItems.Substring(0, $removeItems.LastIndexOf("\"))";
-        #write-host "Remove $removeItems.Substring($removeItems.LastIndexOf("\")+1)";
-        #Get-ChildItem -Path $removeItems.Substring(0, $removeItems.LastIndexOf("\")) -Filter $removeItems.Substring($removeItems.LastIndexOf("\")+1) | foreach { $_.Delete()}
-        if ((Test-Path -path $removeFile) -eq $True) { Remove-Item $removeFile; }
+        $removeItem = $removeNode.innerText.replace("%PackageDir%", "$publishOut");
+        DeleteFromFileSystem $removeItem;
     }
-
 
     # check and create package folder
     if ((Test-Path -path $packageFolder) -ne $True) { New-Item $packageFolder -type directory | out-null; }
     # delete old versions
-    Get-ChildItem -Path $packageFolder -File -Filter "*$projectName.zip" | foreach { $_.Delete()}
+    DeleteFromFileSystem "$packageFolder\*$projectName.zip";
+    #Get-ChildItem -Path $packageFolder -File -Filter "*$projectName.zip" | foreach { $_.Delete()}
     # pack new version
     Compress-Archive -Path $publishOut\* -DestinationPath $zipOut -Force;
 }
+
+#
 # build version file and Copy Package
+#
 function BuildVersionAndCopyPackage()
 {
     if ($configXml.DocumentElement.SelectSingleNode("AutoUpdate") -eq $False) { return; }
@@ -233,6 +259,9 @@ function BuildVersionAndCopyPackage()
     }
 }
 
+#
+# Main
+#
 Start-Transcript -path "$currectFolder\BuildDotnetPackage.log" -append -IncludeInvocationHeader;
 Try
 {

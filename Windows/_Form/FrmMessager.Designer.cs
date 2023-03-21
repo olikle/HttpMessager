@@ -29,239 +29,233 @@ namespace HttpMessager
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tsslText = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tabControl = new System.Windows.Forms.TabControl();
-            this.tpMessage = new System.Windows.Forms.TabPage();
-            this.chbAddToAutostart = new System.Windows.Forms.CheckBox();
-            this.btnIncomeMessageTest = new System.Windows.Forms.Button();
-            this.btnSoundTest = new System.Windows.Forms.Button();
-            this.btnSend = new System.Windows.Forms.Button();
-            this.txtAdresses = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtMessage = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tpLog = new System.Windows.Forms.TabPage();
-            this.btnStopListener = new System.Windows.Forms.Button();
-            this.btnStartListener = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.libStatus = new System.Windows.Forms.ListBox();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.statusStrip1.SuspendLayout();
-            this.tabControl.SuspendLayout();
-            this.tpMessage.SuspendLayout();
-            this.tpLog.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMessager));
+            statusStrip1 = new System.Windows.Forms.StatusStrip();
+            tsslText = new System.Windows.Forms.ToolStripStatusLabel();
+            tabControl = new System.Windows.Forms.TabControl();
+            tpMessage = new System.Windows.Forms.TabPage();
+            chbAddToAutostart = new System.Windows.Forms.CheckBox();
+            btnIncomeMessageTest = new System.Windows.Forms.Button();
+            btnSoundTest = new System.Windows.Forms.Button();
+            btnSend = new System.Windows.Forms.Button();
+            txtAdresses = new System.Windows.Forms.TextBox();
+            label2 = new System.Windows.Forms.Label();
+            txtMessage = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
+            tpLog = new System.Windows.Forms.TabPage();
+            btnStopListener = new System.Windows.Forms.Button();
+            btnStartListener = new System.Windows.Forms.Button();
+            btnClear = new System.Windows.Forms.Button();
+            libStatus = new System.Windows.Forms.ListBox();
+            notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
+            statusStrip1.SuspendLayout();
+            tabControl.SuspendLayout();
+            tpMessage.SuspendLayout();
+            tpLog.SuspendLayout();
+            SuspendLayout();
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsslText});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 411);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(595, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsslText });
+            statusStrip1.Location = new System.Drawing.Point(0, 411);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new System.Drawing.Size(595, 22);
+            statusStrip1.TabIndex = 1;
+            statusStrip1.Text = "statusStrip1";
             // 
             // tsslText
             // 
-            this.tsslText.Name = "tsslText";
-            this.tsslText.Size = new System.Drawing.Size(0, 17);
+            tsslText.Name = "tsslText";
+            tsslText.Size = new System.Drawing.Size(0, 17);
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl.Controls.Add(this.tpMessage);
-            this.tabControl.Controls.Add(this.tpLog);
-            this.tabControl.Location = new System.Drawing.Point(0, 28);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(595, 380);
-            this.tabControl.TabIndex = 2;
+            tabControl.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            tabControl.Controls.Add(tpMessage);
+            tabControl.Controls.Add(tpLog);
+            tabControl.Location = new System.Drawing.Point(0, 28);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new System.Drawing.Size(595, 380);
+            tabControl.TabIndex = 2;
             // 
             // tpMessage
             // 
-            this.tpMessage.Controls.Add(this.chbAddToAutostart);
-            this.tpMessage.Controls.Add(this.btnIncomeMessageTest);
-            this.tpMessage.Controls.Add(this.btnSoundTest);
-            this.tpMessage.Controls.Add(this.btnSend);
-            this.tpMessage.Controls.Add(this.txtAdresses);
-            this.tpMessage.Controls.Add(this.label2);
-            this.tpMessage.Controls.Add(this.txtMessage);
-            this.tpMessage.Controls.Add(this.label1);
-            this.tpMessage.Location = new System.Drawing.Point(4, 24);
-            this.tpMessage.Name = "tpMessage";
-            this.tpMessage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMessage.Size = new System.Drawing.Size(587, 352);
-            this.tpMessage.TabIndex = 0;
-            this.tpMessage.Text = "Message";
-            this.tpMessage.UseVisualStyleBackColor = true;
+            tpMessage.Controls.Add(chbAddToAutostart);
+            tpMessage.Controls.Add(btnIncomeMessageTest);
+            tpMessage.Controls.Add(btnSoundTest);
+            tpMessage.Controls.Add(btnSend);
+            tpMessage.Controls.Add(txtAdresses);
+            tpMessage.Controls.Add(label2);
+            tpMessage.Controls.Add(txtMessage);
+            tpMessage.Controls.Add(label1);
+            tpMessage.Location = new System.Drawing.Point(4, 24);
+            tpMessage.Name = "tpMessage";
+            tpMessage.Padding = new System.Windows.Forms.Padding(3);
+            tpMessage.Size = new System.Drawing.Size(587, 352);
+            tpMessage.TabIndex = 0;
+            tpMessage.Text = "Message";
+            tpMessage.UseVisualStyleBackColor = true;
             // 
             // chbAddToAutostart
             // 
-            this.chbAddToAutostart.AutoSize = true;
-            this.chbAddToAutostart.Location = new System.Drawing.Point(69, 262);
-            this.chbAddToAutostart.Name = "chbAddToAutostart";
-            this.chbAddToAutostart.Size = new System.Drawing.Size(167, 19);
-            this.chbAddToAutostart.TabIndex = 7;
-            this.chbAddToAutostart.Text = "Runs when Windows starts";
-            this.chbAddToAutostart.UseVisualStyleBackColor = true;
-            this.chbAddToAutostart.CheckedChanged += new System.EventHandler(this.chbAddToAutostart_CheckedChanged);
+            chbAddToAutostart.AutoSize = true;
+            chbAddToAutostart.Location = new System.Drawing.Point(69, 262);
+            chbAddToAutostart.Name = "chbAddToAutostart";
+            chbAddToAutostart.Size = new System.Drawing.Size(167, 19);
+            chbAddToAutostart.TabIndex = 7;
+            chbAddToAutostart.Text = "Runs when Windows starts";
+            chbAddToAutostart.UseVisualStyleBackColor = true;
+            chbAddToAutostart.CheckedChanged += chbAddToAutostart_CheckedChanged;
             // 
             // btnIncomeMessageTest
             // 
-            this.btnIncomeMessageTest.Location = new System.Drawing.Point(361, 218);
-            this.btnIncomeMessageTest.Name = "btnIncomeMessageTest";
-            this.btnIncomeMessageTest.Size = new System.Drawing.Size(129, 24);
-            this.btnIncomeMessageTest.TabIndex = 6;
-            this.btnIncomeMessageTest.Text = "Income Message Test";
-            this.btnIncomeMessageTest.UseVisualStyleBackColor = true;
-            this.btnIncomeMessageTest.Click += new System.EventHandler(this.btnIncomeMessageTest_Click);
+            btnIncomeMessageTest.Location = new System.Drawing.Point(361, 218);
+            btnIncomeMessageTest.Name = "btnIncomeMessageTest";
+            btnIncomeMessageTest.Size = new System.Drawing.Size(129, 24);
+            btnIncomeMessageTest.TabIndex = 6;
+            btnIncomeMessageTest.Text = "Income Message Test";
+            btnIncomeMessageTest.UseVisualStyleBackColor = true;
+            btnIncomeMessageTest.Click += btnIncomeMessageTest_Click;
             // 
             // btnSoundTest
             // 
-            this.btnSoundTest.Location = new System.Drawing.Point(496, 218);
-            this.btnSoundTest.Name = "btnSoundTest";
-            this.btnSoundTest.Size = new System.Drawing.Size(83, 24);
-            this.btnSoundTest.TabIndex = 5;
-            this.btnSoundTest.Text = "Sound Test";
-            this.btnSoundTest.UseVisualStyleBackColor = true;
-            this.btnSoundTest.Click += new System.EventHandler(this.btnSoundTest_Click);
+            btnSoundTest.Location = new System.Drawing.Point(496, 218);
+            btnSoundTest.Name = "btnSoundTest";
+            btnSoundTest.Size = new System.Drawing.Size(83, 24);
+            btnSoundTest.TabIndex = 5;
+            btnSoundTest.Text = "Sound Test";
+            btnSoundTest.UseVisualStyleBackColor = true;
+            btnSoundTest.Click += btnSoundTest_Click;
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(68, 218);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(83, 24);
-            this.btnSend.TabIndex = 4;
-            this.btnSend.Text = "Send";
-            this.btnSend.UseVisualStyleBackColor = true;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            btnSend.Location = new System.Drawing.Point(68, 218);
+            btnSend.Name = "btnSend";
+            btnSend.Size = new System.Drawing.Size(83, 24);
+            btnSend.TabIndex = 4;
+            btnSend.Text = "Send";
+            btnSend.UseVisualStyleBackColor = true;
+            btnSend.Click += btnSend_Click;
             // 
             // txtAdresses
             // 
-            this.txtAdresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAdresses.Location = new System.Drawing.Point(68, 168);
-            this.txtAdresses.Name = "txtAdresses";
-            this.txtAdresses.Size = new System.Drawing.Size(511, 23);
-            this.txtAdresses.TabIndex = 3;
-            this.txtAdresses.Text = "localhost";
+            txtAdresses.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txtAdresses.Location = new System.Drawing.Point(68, 168);
+            txtAdresses.Name = "txtAdresses";
+            txtAdresses.Size = new System.Drawing.Size(511, 23);
+            txtAdresses.TabIndex = 3;
+            txtAdresses.Text = "localhost";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 171);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 15);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Adresses:";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(8, 171);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(56, 15);
+            label2.TabIndex = 2;
+            label2.Text = "Adresses:";
             // 
             // txtMessage
             // 
-            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMessage.Location = new System.Drawing.Point(68, 14);
-            this.txtMessage.Multiline = true;
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(513, 133);
-            this.txtMessage.TabIndex = 1;
-            this.txtMessage.Text = "Message from HttpMessager, check it out!";
+            txtMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txtMessage.Location = new System.Drawing.Point(68, 14);
+            txtMessage.Multiline = true;
+            txtMessage.Name = "txtMessage";
+            txtMessage.Size = new System.Drawing.Size(513, 133);
+            txtMessage.TabIndex = 1;
+            txtMessage.Text = "Message from HttpMessager, check it out!";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Message:";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(6, 17);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(56, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Message:";
             // 
             // tpLog
             // 
-            this.tpLog.Controls.Add(this.btnStopListener);
-            this.tpLog.Controls.Add(this.btnStartListener);
-            this.tpLog.Controls.Add(this.btnClear);
-            this.tpLog.Controls.Add(this.libStatus);
-            this.tpLog.Location = new System.Drawing.Point(4, 24);
-            this.tpLog.Name = "tpLog";
-            this.tpLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLog.Size = new System.Drawing.Size(587, 352);
-            this.tpLog.TabIndex = 1;
-            this.tpLog.Text = "Logging";
-            this.tpLog.UseVisualStyleBackColor = true;
+            tpLog.Controls.Add(btnStopListener);
+            tpLog.Controls.Add(btnStartListener);
+            tpLog.Controls.Add(btnClear);
+            tpLog.Controls.Add(libStatus);
+            tpLog.Location = new System.Drawing.Point(4, 24);
+            tpLog.Name = "tpLog";
+            tpLog.Padding = new System.Windows.Forms.Padding(3);
+            tpLog.Size = new System.Drawing.Size(587, 352);
+            tpLog.TabIndex = 1;
+            tpLog.Text = "Logging";
+            tpLog.UseVisualStyleBackColor = true;
             // 
             // btnStopListener
             // 
-            this.btnStopListener.Location = new System.Drawing.Point(169, 221);
-            this.btnStopListener.Name = "btnStopListener";
-            this.btnStopListener.Size = new System.Drawing.Size(110, 23);
-            this.btnStopListener.TabIndex = 7;
-            this.btnStopListener.Text = "Stop Listener";
-            this.btnStopListener.UseVisualStyleBackColor = true;
-            this.btnStopListener.Click += new System.EventHandler(this.btnStopListener_Click);
+            btnStopListener.Location = new System.Drawing.Point(169, 221);
+            btnStopListener.Name = "btnStopListener";
+            btnStopListener.Size = new System.Drawing.Size(110, 23);
+            btnStopListener.TabIndex = 7;
+            btnStopListener.Text = "Stop Listener";
+            btnStopListener.UseVisualStyleBackColor = true;
+            btnStopListener.Click += btnStopListener_Click;
             // 
             // btnStartListener
             // 
-            this.btnStartListener.Location = new System.Drawing.Point(14, 221);
-            this.btnStartListener.Name = "btnStartListener";
-            this.btnStartListener.Size = new System.Drawing.Size(115, 23);
-            this.btnStartListener.TabIndex = 6;
-            this.btnStartListener.Text = "Start Listener";
-            this.btnStartListener.UseVisualStyleBackColor = true;
-            this.btnStartListener.Click += new System.EventHandler(this.btnStartListener_Click);
+            btnStartListener.Location = new System.Drawing.Point(14, 221);
+            btnStartListener.Name = "btnStartListener";
+            btnStartListener.Size = new System.Drawing.Size(115, 23);
+            btnStartListener.TabIndex = 6;
+            btnStartListener.Text = "Start Listener";
+            btnStartListener.UseVisualStyleBackColor = true;
+            btnStartListener.Click += btnStartListener_Click;
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(261, 316);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(78, 23);
-            this.btnClear.TabIndex = 1;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            btnClear.Location = new System.Drawing.Point(261, 316);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new System.Drawing.Size(78, 23);
+            btnClear.TabIndex = 1;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
             // 
             // libStatus
             // 
-            this.libStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.libStatus.FormattingEnabled = true;
-            this.libStatus.ItemHeight = 15;
-            this.libStatus.Location = new System.Drawing.Point(8, 6);
-            this.libStatus.Name = "libStatus";
-            this.libStatus.Size = new System.Drawing.Size(573, 199);
-            this.libStatus.TabIndex = 0;
+            libStatus.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            libStatus.FormattingEnabled = true;
+            libStatus.ItemHeight = 15;
+            libStatus.Location = new System.Drawing.Point(8, 6);
+            libStatus.Name = "libStatus";
+            libStatus.Size = new System.Drawing.Size(573, 199);
+            libStatus.TabIndex = 0;
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.Text = "HttpMessenger";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            notifyIcon1.Text = "HttpMessenger";
+            notifyIcon1.Visible = true;
+            notifyIcon1.DoubleClick += notifyIcon1_DoubleClick;
             // 
             // FrmMessager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(595, 433);
-            this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.statusStrip1);
-            this.Name = "FrmMessenger";
-            this.Text = "Http Messenger";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMessager_FormClosing);
-            this.Load += new System.EventHandler(this.FrmMessager_Load);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.tabControl.ResumeLayout(false);
-            this.tpMessage.ResumeLayout(false);
-            this.tpMessage.PerformLayout();
-            this.tpLog.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(595, 433);
+            Controls.Add(tabControl);
+            Controls.Add(statusStrip1);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Name = "FrmMessager";
+            Text = "Http Messenger";
+            FormClosing += FrmMessager_FormClosing;
+            Load += FrmMessager_Load;
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
+            tabControl.ResumeLayout(false);
+            tpMessage.ResumeLayout(false);
+            tpMessage.PerformLayout();
+            tpLog.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
